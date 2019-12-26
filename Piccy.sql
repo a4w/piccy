@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 26, 2019 at 07:56 PM
+-- Generation Time: Dec 26, 2019 at 10:50 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -28,15 +28,13 @@ SET time_zone = "+00:00";
 -- Table structure for table `Comment`
 --
 
-CREATE TABLE IF NOT EXISTS `Comment` (
-  `CommentID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `Comment`;
+CREATE TABLE `Comment` (
+  `CommentID` int(10) UNSIGNED NOT NULL,
   `UserID` int(10) UNSIGNED NOT NULL,
   `PictureID` int(10) UNSIGNED NOT NULL,
   `Content` varchar(255) COLLATE utf8_bin NOT NULL,
-  `CreatedAt` timestamp NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`CommentID`),
-  KEY `Comment-UserID-FK` (`UserID`),
-  KEY `Comment-PictureID-FK` (`PictureID`)
+  `CreatedAt` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -45,11 +43,11 @@ CREATE TABLE IF NOT EXISTS `Comment` (
 -- Table structure for table `Country`
 --
 
-CREATE TABLE IF NOT EXISTS `Country` (
-  `CountryID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `CountryName` varchar(255) COLLATE utf8_bin NOT NULL,
-  PRIMARY KEY (`CountryID`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+DROP TABLE IF EXISTS `Country`;
+CREATE TABLE `Country` (
+  `CountryID` int(10) UNSIGNED NOT NULL,
+  `CountryName` varchar(255) COLLATE utf8_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `Country`
@@ -75,11 +73,10 @@ INSERT INTO `Country` (`CountryID`, `CountryName`) VALUES
 -- Table structure for table `EmailVerification`
 --
 
-CREATE TABLE IF NOT EXISTS `EmailVerification` (
+DROP TABLE IF EXISTS `EmailVerification`;
+CREATE TABLE `EmailVerification` (
   `EmailVerificationID` char(64) COLLATE utf8_bin NOT NULL COMMENT 'SHA256 Hash',
-  `UserID` int(10) UNSIGNED NOT NULL,
-  PRIMARY KEY (`EmailVerificationID`),
-  KEY `EmailVerfication-UserID-FK` (`UserID`)
+  `UserID` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -88,13 +85,11 @@ CREATE TABLE IF NOT EXISTS `EmailVerification` (
 -- Table structure for table `Follow`
 --
 
-CREATE TABLE IF NOT EXISTS `Follow` (
-  `FollowID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `Follow`;
+CREATE TABLE `Follow` (
+  `FollowID` int(10) UNSIGNED NOT NULL,
   `FollowerUserID` int(10) UNSIGNED NOT NULL,
-  `FollowedUserID` int(10) UNSIGNED NOT NULL,
-  PRIMARY KEY (`FollowID`),
-  KEY `Follow-FollowerUserID-FK` (`FollowerUserID`),
-  KEY `Follow-FollowedUserID-FK` (`FollowedUserID`)
+  `FollowedUserID` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -103,12 +98,11 @@ CREATE TABLE IF NOT EXISTS `Follow` (
 -- Table structure for table `PasswordChangeRequest`
 --
 
-CREATE TABLE IF NOT EXISTS `PasswordChangeRequest` (
+DROP TABLE IF EXISTS `PasswordChangeRequest`;
+CREATE TABLE `PasswordChangeRequest` (
   `PasswordChangeRequestID` char(64) COLLATE utf8_bin NOT NULL COMMENT 'SHA256 Hash',
   `UserID` int(11) UNSIGNED NOT NULL,
-  `CreatedAt` timestamp NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`PasswordChangeRequestID`),
-  KEY `PasswordChageRequest-UserID-FK` (`UserID`)
+  `CreatedAt` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -117,15 +111,14 @@ CREATE TABLE IF NOT EXISTS `PasswordChangeRequest` (
 -- Table structure for table `Picture`
 --
 
-CREATE TABLE IF NOT EXISTS `Picture` (
-  `PictureID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `Picture`;
+CREATE TABLE `Picture` (
+  `PictureID` int(10) UNSIGNED NOT NULL,
   `UserID` int(10) UNSIGNED NOT NULL,
   `PicturePath` varchar(255) COLLATE utf8_bin NOT NULL,
   `CreatedAt` timestamp NULL DEFAULT current_timestamp(),
   `Description` varchar(255) COLLATE utf8_bin NOT NULL,
-  `AllowComments` tinyint(1) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`PictureID`),
-  KEY `Picture-UserID-FK` (`UserID`)
+  `AllowComments` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -134,15 +127,13 @@ CREATE TABLE IF NOT EXISTS `Picture` (
 -- Table structure for table `Reaction`
 --
 
-CREATE TABLE IF NOT EXISTS `Reaction` (
-  `ReactionID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `Reaction`;
+CREATE TABLE `Reaction` (
+  `ReactionID` int(10) UNSIGNED NOT NULL,
   `UserID` int(10) UNSIGNED NOT NULL,
   `PictureID` int(10) UNSIGNED NOT NULL,
   `Type` enum('UPVOTE','DOWNVOTE') COLLATE utf8_bin NOT NULL,
-  `CreatedAt` timestamp NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`ReactionID`),
-  KEY `Reaction-UserID-FK` (`UserID`),
-  KEY `Reaction-PictureID-FK` (`PictureID`)
+  `CreatedAt` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -151,18 +142,119 @@ CREATE TABLE IF NOT EXISTS `Reaction` (
 -- Table structure for table `User`
 --
 
-CREATE TABLE IF NOT EXISTS `User` (
-  `UserID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `User`;
+CREATE TABLE `User` (
+  `UserID` int(10) UNSIGNED NOT NULL,
   `Username` varchar(50) COLLATE utf8_bin NOT NULL,
   `Password` char(60) COLLATE utf8_bin NOT NULL COMMENT 'BCRYPT Hash',
   `CountryID` int(10) UNSIGNED NOT NULL,
   `Email` varchar(254) COLLATE utf8_bin NOT NULL,
   `Bio` text COLLATE utf8_bin DEFAULT NULL,
-  `ProfilePicturePath` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`UserID`),
-  UNIQUE KEY `Email` (`Email`),
-  KEY `User-CountryID-FK` (`CountryID`)
+  `ProfilePicturePath` varchar(255) COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `Comment`
+--
+ALTER TABLE `Comment`
+  ADD PRIMARY KEY (`CommentID`),
+  ADD KEY `Comment-UserID-FK` (`UserID`),
+  ADD KEY `Comment-PictureID-FK` (`PictureID`);
+
+--
+-- Indexes for table `Country`
+--
+ALTER TABLE `Country`
+  ADD PRIMARY KEY (`CountryID`);
+
+--
+-- Indexes for table `EmailVerification`
+--
+ALTER TABLE `EmailVerification`
+  ADD PRIMARY KEY (`EmailVerificationID`),
+  ADD KEY `EmailVerfication-UserID-FK` (`UserID`);
+
+--
+-- Indexes for table `Follow`
+--
+ALTER TABLE `Follow`
+  ADD PRIMARY KEY (`FollowID`),
+  ADD KEY `Follow-FollowerUserID-FK` (`FollowerUserID`),
+  ADD KEY `Follow-FollowedUserID-FK` (`FollowedUserID`);
+
+--
+-- Indexes for table `PasswordChangeRequest`
+--
+ALTER TABLE `PasswordChangeRequest`
+  ADD PRIMARY KEY (`PasswordChangeRequestID`),
+  ADD KEY `PasswordChageRequest-UserID-FK` (`UserID`);
+
+--
+-- Indexes for table `Picture`
+--
+ALTER TABLE `Picture`
+  ADD PRIMARY KEY (`PictureID`),
+  ADD KEY `Picture-UserID-FK` (`UserID`);
+
+--
+-- Indexes for table `Reaction`
+--
+ALTER TABLE `Reaction`
+  ADD PRIMARY KEY (`ReactionID`),
+  ADD KEY `Reaction-UserID-FK` (`UserID`),
+  ADD KEY `Reaction-PictureID-FK` (`PictureID`);
+
+--
+-- Indexes for table `User`
+--
+ALTER TABLE `User`
+  ADD PRIMARY KEY (`UserID`),
+  ADD UNIQUE KEY `Email` (`Email`),
+  ADD KEY `User-CountryID-FK` (`CountryID`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `Comment`
+--
+ALTER TABLE `Comment`
+  MODIFY `CommentID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `Country`
+--
+ALTER TABLE `Country`
+  MODIFY `CountryID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `Follow`
+--
+ALTER TABLE `Follow`
+  MODIFY `FollowID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `Picture`
+--
+ALTER TABLE `Picture`
+  MODIFY `PictureID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `Reaction`
+--
+ALTER TABLE `Reaction`
+  MODIFY `ReactionID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `User`
+--
+ALTER TABLE `User`
+  MODIFY `UserID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
