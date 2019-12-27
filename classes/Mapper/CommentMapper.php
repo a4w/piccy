@@ -19,7 +19,7 @@ class CommentMapper{
         $stmt->bindParam(':userid', $userid);
         $pictureid = $comment->getPictureID();
         $stmt->bindParam(':pictureid', $pictureid);
-        $content = $comment->getContent();
+        $content = $comment->getContent();  
         $stmt->bindParam(':content', $content);
         $createdat = $comment->getCreatedAt();
         $stmt->bindParam(':createdat', $createdat);

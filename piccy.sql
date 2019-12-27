@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 27, 2019 at 01:35 PM
+-- Generation Time: Dec 27, 2019 at 06:36 PM
 -- Server version: 5.7.28-0ubuntu0.18.04.4
 -- PHP Version: 7.2.24-0ubuntu0.18.04.1
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `piccy`
+-- Database: `Piccy`
 --
 
 -- --------------------------------------------------------
@@ -31,7 +31,7 @@ CREATE TABLE `Comment` (
   `UserID` int(10) UNSIGNED NOT NULL,
   `PictureID` int(10) UNSIGNED NOT NULL,
   `Content` varchar(255) COLLATE utf8_bin NOT NULL,
-  `CreatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `CreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -94,8 +94,15 @@ CREATE TABLE `Follow` (
 CREATE TABLE `PasswordChangeRequest` (
   `PasswordChangeRequestID` char(64) COLLATE utf8_bin NOT NULL COMMENT 'SHA256 Hash',
   `UserID` int(11) UNSIGNED NOT NULL,
-  `CreatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `CreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `PasswordChangeRequest`
+--
+
+INSERT INTO `PasswordChangeRequest` (`PasswordChangeRequestID`, `UserID`, `CreatedAt`) VALUES
+('321321321', 1, '2019-12-26 22:00:00');
 
 -- --------------------------------------------------------
 
@@ -107,10 +114,17 @@ CREATE TABLE `Picture` (
   `PictureID` int(10) UNSIGNED NOT NULL,
   `UserID` int(10) UNSIGNED NOT NULL,
   `PicturePath` varchar(255) COLLATE utf8_bin NOT NULL,
-  `CreatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `CreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Description` varchar(255) COLLATE utf8_bin NOT NULL,
   `AllowComments` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `Picture`
+--
+
+INSERT INTO `Picture` (`PictureID`, `UserID`, `PicturePath`, `CreatedAt`, `Description`, `AllowComments`) VALUES
+(2, 2, 'new directoy', '2019-12-27 15:01:11', 'newewewew', 0);
 
 -- --------------------------------------------------------
 
@@ -141,6 +155,13 @@ CREATE TABLE `User` (
   `Bio` text COLLATE utf8_bin,
   `ProfilePicturePath` varchar(255) COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `User`
+--
+
+INSERT INTO `User` (`UserID`, `Username`, `Password`, `CountryID`, `Email`, `Bio`, `ProfilePicturePath`) VALUES
+(1, 'ahmad', '$2y$10$sfst9/70VG5rthe1AEUASunWodv6wXO56M4mRQ2yOaBp80XwzMxPO', 1, 'ahmad@protonmail', 'boy', NULL);
 
 --
 -- Indexes for dumped tables
@@ -214,7 +235,7 @@ ALTER TABLE `User`
 -- AUTO_INCREMENT for table `Comment`
 --
 ALTER TABLE `Comment`
-  MODIFY `CommentID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `CommentID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `Country`
 --
@@ -224,7 +245,7 @@ ALTER TABLE `Country`
 -- AUTO_INCREMENT for table `Picture`
 --
 ALTER TABLE `Picture`
-  MODIFY `PictureID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `PictureID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `Reaction`
 --
@@ -234,7 +255,7 @@ ALTER TABLE `Reaction`
 -- AUTO_INCREMENT for table `User`
 --
 ALTER TABLE `User`
-  MODIFY `UserID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `UserID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Constraints for dumped tables
 --
@@ -243,8 +264,7 @@ ALTER TABLE `User`
 -- Constraints for table `Comment`
 --
 ALTER TABLE `Comment`
-  ADD CONSTRAINT `Comment-PictureID-FK` FOREIGN KEY (`PictureID`) REFERENCES `Picture` (`PictureID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `Comment-UserID-FK` FOREIGN KEY (`UserID`) REFERENCES `User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `Comment-PictureID-FK` FOREIGN KEY (`PictureID`) REFERENCES `Picture` (`PictureID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `EmailVerification`
@@ -258,18 +278,6 @@ ALTER TABLE `EmailVerification`
 ALTER TABLE `Follow`
   ADD CONSTRAINT `Follow-FollowedUserID-FK` FOREIGN KEY (`FollowedUserID`) REFERENCES `User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `Follow-FollowerUserID-FK` FOREIGN KEY (`FollowerUserID`) REFERENCES `User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `PasswordChangeRequest`
---
-ALTER TABLE `PasswordChangeRequest`
-  ADD CONSTRAINT `PasswordChageRequest-UserID-FK` FOREIGN KEY (`UserID`) REFERENCES `User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `Picture`
---
-ALTER TABLE `Picture`
-  ADD CONSTRAINT `Picture-UserID-FK` FOREIGN KEY (`UserID`) REFERENCES `User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `Reaction`
