@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 4.6.6deb5
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Dec 26, 2019 at 10:50 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.1
+-- Host: localhost:3306
+-- Generation Time: Dec 27, 2019 at 01:35 PM
+-- Server version: 5.7.28-0ubuntu0.18.04.4
+-- PHP Version: 7.2.24-0ubuntu0.18.04.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `Piccy`
+-- Database: `piccy`
 --
 
 -- --------------------------------------------------------
@@ -28,13 +26,12 @@ SET time_zone = "+00:00";
 -- Table structure for table `Comment`
 --
 
-DROP TABLE IF EXISTS `Comment`;
 CREATE TABLE `Comment` (
   `CommentID` int(10) UNSIGNED NOT NULL,
   `UserID` int(10) UNSIGNED NOT NULL,
   `PictureID` int(10) UNSIGNED NOT NULL,
   `Content` varchar(255) COLLATE utf8_bin NOT NULL,
-  `CreatedAt` timestamp NULL DEFAULT current_timestamp()
+  `CreatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -43,7 +40,6 @@ CREATE TABLE `Comment` (
 -- Table structure for table `Country`
 --
 
-DROP TABLE IF EXISTS `Country`;
 CREATE TABLE `Country` (
   `CountryID` int(10) UNSIGNED NOT NULL,
   `CountryName` varchar(255) COLLATE utf8_bin NOT NULL
@@ -73,7 +69,6 @@ INSERT INTO `Country` (`CountryID`, `CountryName`) VALUES
 -- Table structure for table `EmailVerification`
 --
 
-DROP TABLE IF EXISTS `EmailVerification`;
 CREATE TABLE `EmailVerification` (
   `EmailVerificationID` char(64) COLLATE utf8_bin NOT NULL COMMENT 'SHA256 Hash',
   `UserID` int(10) UNSIGNED NOT NULL
@@ -85,9 +80,7 @@ CREATE TABLE `EmailVerification` (
 -- Table structure for table `Follow`
 --
 
-DROP TABLE IF EXISTS `Follow`;
 CREATE TABLE `Follow` (
-  `FollowID` int(10) UNSIGNED NOT NULL,
   `FollowerUserID` int(10) UNSIGNED NOT NULL,
   `FollowedUserID` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -98,11 +91,10 @@ CREATE TABLE `Follow` (
 -- Table structure for table `PasswordChangeRequest`
 --
 
-DROP TABLE IF EXISTS `PasswordChangeRequest`;
 CREATE TABLE `PasswordChangeRequest` (
   `PasswordChangeRequestID` char(64) COLLATE utf8_bin NOT NULL COMMENT 'SHA256 Hash',
   `UserID` int(11) UNSIGNED NOT NULL,
-  `CreatedAt` timestamp NULL DEFAULT current_timestamp()
+  `CreatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -111,14 +103,13 @@ CREATE TABLE `PasswordChangeRequest` (
 -- Table structure for table `Picture`
 --
 
-DROP TABLE IF EXISTS `Picture`;
 CREATE TABLE `Picture` (
   `PictureID` int(10) UNSIGNED NOT NULL,
   `UserID` int(10) UNSIGNED NOT NULL,
   `PicturePath` varchar(255) COLLATE utf8_bin NOT NULL,
-  `CreatedAt` timestamp NULL DEFAULT current_timestamp(),
+  `CreatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `Description` varchar(255) COLLATE utf8_bin NOT NULL,
-  `AllowComments` tinyint(1) NOT NULL DEFAULT 1
+  `AllowComments` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -127,13 +118,12 @@ CREATE TABLE `Picture` (
 -- Table structure for table `Reaction`
 --
 
-DROP TABLE IF EXISTS `Reaction`;
 CREATE TABLE `Reaction` (
   `ReactionID` int(10) UNSIGNED NOT NULL,
   `UserID` int(10) UNSIGNED NOT NULL,
   `PictureID` int(10) UNSIGNED NOT NULL,
   `Type` enum('UPVOTE','DOWNVOTE') COLLATE utf8_bin NOT NULL,
-  `CreatedAt` timestamp NULL DEFAULT current_timestamp()
+  `CreatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -142,14 +132,13 @@ CREATE TABLE `Reaction` (
 -- Table structure for table `User`
 --
 
-DROP TABLE IF EXISTS `User`;
 CREATE TABLE `User` (
   `UserID` int(10) UNSIGNED NOT NULL,
   `Username` varchar(50) COLLATE utf8_bin NOT NULL,
   `Password` char(60) COLLATE utf8_bin NOT NULL COMMENT 'BCRYPT Hash',
   `CountryID` int(10) UNSIGNED NOT NULL,
   `Email` varchar(254) COLLATE utf8_bin NOT NULL,
-  `Bio` text COLLATE utf8_bin DEFAULT NULL,
+  `Bio` text COLLATE utf8_bin,
   `ProfilePicturePath` varchar(255) COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -182,7 +171,7 @@ ALTER TABLE `EmailVerification`
 -- Indexes for table `Follow`
 --
 ALTER TABLE `Follow`
-  ADD PRIMARY KEY (`FollowID`),
+  ADD PRIMARY KEY (`FollowerUserID`,`FollowedUserID`),
   ADD KEY `Follow-FollowerUserID-FK` (`FollowerUserID`),
   ADD KEY `Follow-FollowedUserID-FK` (`FollowedUserID`);
 
@@ -214,6 +203,7 @@ ALTER TABLE `Reaction`
 ALTER TABLE `User`
   ADD PRIMARY KEY (`UserID`),
   ADD UNIQUE KEY `Email` (`Email`),
+  ADD UNIQUE KEY `Username` (`Username`),
   ADD KEY `User-CountryID-FK` (`CountryID`);
 
 --
@@ -225,37 +215,26 @@ ALTER TABLE `User`
 --
 ALTER TABLE `Comment`
   MODIFY `CommentID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `Country`
 --
 ALTER TABLE `Country`
   MODIFY `CountryID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
--- AUTO_INCREMENT for table `Follow`
---
-ALTER TABLE `Follow`
-  MODIFY `FollowID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `Picture`
 --
 ALTER TABLE `Picture`
   MODIFY `PictureID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `Reaction`
 --
 ALTER TABLE `Reaction`
   MODIFY `ReactionID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `User`
 --
 ALTER TABLE `User`
   MODIFY `UserID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
 -- Constraints for dumped tables
 --
@@ -304,7 +283,6 @@ ALTER TABLE `Reaction`
 --
 ALTER TABLE `User`
   ADD CONSTRAINT `User-CountryID-FK` FOREIGN KEY (`CountryID`) REFERENCES `Country` (`CountryID`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
