@@ -25,6 +25,15 @@ switch($action){
         $user = new User(null, $username, password_hash($password, PASSWORD_BCRYPT), 1, $email, $bio, null);
         UserMapper::add($user);
         break;
+    case 'login':
+        $username = $_POST['username'] ?? null;
+        $password = $_POST['password'] ?? null;
+        $user = UserMapper::getByUsername($username);
+        if($user === null || $user->getPassword() !== $password){
+            $output['error'] = true;
+            break;
+        }
+        break;
 }
 
 echo json_encode($output);
