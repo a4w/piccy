@@ -35,7 +35,7 @@
                         <label for="password">Password: </label>
                         <input id="password" class="form-control"/>
                     </div>
-                    <span class="alert alert-danger" id="status"></span>
+                    <span class="alert alert-danger d-none" id="status"></span>
                     <button class="btn btn-dark float-right" id="login"><i class="fas fa-sign-in-alt"></i>&nbsp;Login</button>
                 </div>
             </div>
@@ -43,7 +43,7 @@
         <script src="./vendor/jquery/js/jquery.min.js"></script>
         <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
         <script>
-		$("#login").click(function(){
+        $("#login").click(function(){
             $("#username").removeClass("border-danger");
             $("#password").removeClass("border-danger");
             $(".field-error").remove();
@@ -57,7 +57,6 @@
                 $("#password").parent().append("<span class ='field-error'>Passwords is Empty</span>");
                 return;
             }
-            
             $.post("controllers/user.controller.php", {
                 "action" : "login",
                 "username":$("#username").val(),
@@ -65,10 +64,8 @@
                }
             ).done(function(data){
                 if(data.error){
-					$("#status").text("Incorrect username or password!");
-                }else{
-            
-                }
+                    $("#status").text("Incorrect username or password!");
+                }else{ }
             });
         });
         </script>

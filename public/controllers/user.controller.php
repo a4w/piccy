@@ -29,7 +29,8 @@ switch($action){
         $username = $_POST['username'] ?? null;
         $password = $_POST['password'] ?? null;
         $user = UserMapper::getByUsername($username);
-        if($user === null || $user->getPassword() !== $password){
+        echo password_hash($password, PASSWORD_BCRYPT);
+        if($user === null || !password_verify($password, $user->getPassword())){
             $output['error'] = true;
             break;
         }
