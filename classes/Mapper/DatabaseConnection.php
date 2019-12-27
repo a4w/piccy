@@ -1,4 +1,6 @@
 <?php
+namespace Mapper;
+
 class DatabaseConnection{
     private static $instance = null;
 
@@ -10,14 +12,14 @@ class DatabaseConnection{
     private $link;
 
     private function __construct(){
-        $this->link = new PDO('mysql:host=' . self::HOST . ';dbname=' . self::NAME, self::USERNAME, self::PASSWORD);
-        $this->link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->link = new \PDO('mysql:host=' . self::HOST . ';dbname=' . self::NAME, self::USERNAME, self::PASSWORD);
+        $this->link->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 
     public static function getInstance(){
-        if($this->instance === null)
-            $this->instance = new DatabaseConnection();
-        return $this->instance;
+        if(DatabaseConnection::$instance === null)
+            DatabaseConnection::$instance = new DatabaseConnection();
+        return DatabaseConnection::$instance;
     }
 
 }
