@@ -9,5 +9,6 @@ use Model\User;
 
 include('inc/Autoloader.php');
 
-
+    $user = UserMapper::getByUsername("ahmadd");
+    var_dump($user);
 ?>
