@@ -11,7 +11,5 @@ use Model\Reaction;
 use Model\User;
 
 include('inc/Autoloader.php');
-
 var_dump(PictureMapper::getWallPictures(UserMapper::getByUsername('ahmed')));
-
 ?>
