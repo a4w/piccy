@@ -10,7 +10,7 @@ class Reaction
     private $userID;
     private $pictureID;
     private $type;
-    private $timestamp;
+    private $createdAt;
 
 
     public function __construct($reactionID, $userID, $pictureID, $type, $timestamp)
@@ -19,7 +19,7 @@ class Reaction
         $this->userID = $userID;
         $this->pictureID = $pictureID;
         $this->type = $type;
-        $this->timestamp = $timestamp;
+        $this->createdAt = $timestamp;
     }
 
     public function getReactionID()
@@ -42,9 +42,9 @@ class Reaction
         return $this->type;
     }
 
-    public function getTimestamp()
+    public function getCreatedAt()
     {
-        return $this->timestamp;
+        return $this->createdAt;
     }
 
 
