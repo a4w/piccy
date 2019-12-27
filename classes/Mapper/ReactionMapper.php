@@ -33,12 +33,10 @@ class ReactionMapper{
 
     static function getReactionsByPicture(Picture $picture){
         $pictureid = $picture->getPictureID();
-
         $stmt = DB::prepare('SELECT * FROM Reaction WHERE PictureID = :pictureid');
         $stmt->bindParam(':pictureid', $pictureid);
         $stmt->execute();
         $stmt->setFetchMode(\PDO::FETCH_ASSOC);
-
         $reactions = [];
         if($stmt->rowCount() > 0){
             while($row = $stmt->fetch()){
