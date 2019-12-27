@@ -22,4 +22,9 @@ class DatabaseConnection{
         return DatabaseConnection::$instance;
     }
 
+    public static function prepare($statment){
+        $db = DatabaseConnection::getInstance();
+        return $db::prepare($statment);
+    }
+
 }
