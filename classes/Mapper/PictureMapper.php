@@ -1,9 +1,8 @@
 <?php
-
-
 namespace Mapper;
 
 use \Model\Picture;
+use \Model\User;
 use PDOStatement;
 use Mapper\DatabaseConnection as DB;
 
@@ -53,9 +52,24 @@ class PictureMapper
     }
     static function delete(Picture $picture){
         $pictureid = $picture->getPictureID();
-
         $stmt = DB::prepare('DELETE FROM Picture WHERE PictureID = :pictureid');
         $stmt->bindParam(':pictureid', $pictureid);
         $stmt->execute();
+    }
+
+    static function getWallPictures(User $user){
+        $stmt = DB::prepare('SELECT * FROM `Picture`');
+        $user_id = $user->getUserID();
+        //$stmt->bindParam(':userid', $user_id);
+        $stmt->execute();
+        $stmt->setFetchMode(\PDO::FETCH_ASSOC);
+        $pictures = [];
+        if($stmt->rowCount() > 0){
+            while($row = $stmt->fetch()){
+                $picture = new Picture($row['PictureID'], $row['UserID'], $row['PicturePath'], $row['CreatedAt'], $row['Description'], $row['AllowComments']);
+                $pictures[] = $picture;
+            }
+        }
+        return $pictures;
     }
 }
