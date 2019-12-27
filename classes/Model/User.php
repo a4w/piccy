@@ -4,7 +4,7 @@
 namespace Model;
 
 
-class Account
+class User
 {
     private $userID;
     private $username;
@@ -13,6 +13,17 @@ class Account
     private $email;
     private $bio;
     private $profilePicturePath;
+
+    public function __construct($userID, $username, $password, $countryID, $email, $bio, $profilePicturePath)
+    {
+        $this->userID = $userID;
+        $this->username = $username;
+        $this->password = $password;
+        $this->countryID = $countryID;
+        $this->email = $email;
+        $this->bio = $bio;
+        $this->profilePicturePath = $profilePicturePath;
+    }
 
     public function getUserID(){
         return $this->userID;
