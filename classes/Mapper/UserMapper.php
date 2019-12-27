@@ -5,6 +5,10 @@ use \Model\User;
 use PDOStatement;
 use Mapper\DatabaseConnection as DB;
 
+/**
+ * Maps a user object to a database row
+ * This acts as storage manager for the User entity
+ */
 class UserMapper{
     private static function bindUserParameters(User &$user, PDOStatement &$stmt){
         // Getters functions return value

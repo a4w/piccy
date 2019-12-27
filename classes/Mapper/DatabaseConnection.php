@@ -1,6 +1,9 @@
 <?php
 namespace Mapper;
 
+/*
+ * Database connection class (Singleton)
+ */
 class DatabaseConnection{
     private static $instance = null;
 
@@ -12,6 +15,7 @@ class DatabaseConnection{
     private $link;
 
     private function __construct(){
+        // Connect using PDO
         $this->link = new \PDO('mysql:host=' . self::HOST . ';dbname=' . self::NAME, self::USERNAME, self::PASSWORD);
         $this->link->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
