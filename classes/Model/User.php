@@ -4,7 +4,7 @@
 namespace Model;
 
 
-class Account
+class User
 {
     private $userID;
     private $username;
