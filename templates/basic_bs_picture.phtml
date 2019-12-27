@@ -1,15 +1,31 @@
+<?php
+include('./../inc/Autoloader.php');
+
+use Mapper\CommentMapper;
+use Mapper\UserMapper;
+use Model\Picture;
+use Model\User;
+use Model\Comment;
+
+$author = UserMapper::getByUsername('ahmad');
+$picture = \Mapper\PictureMapper::get(2);
+$comments = [array('comment' => CommentMapper::get(15), 'user' => UserMapper::getByUsername("ahmad"))];
+?>
+
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="../public/vendor/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="../public/vendor/fontawesome/css/all.min.css">
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 col-lg-3">
-            <div class="card" style="width: 18rem;">
+            <div class="card">
                 <div class="picture-author d-flex align-items-center pb-2">
                     <div class="d-inline-block" style="border-radius: 99em; background-image: url(./up.jpg);background-position: center; background-size: contain; margin-right: 5px; width:50px;height:50px;"></div>
-                    <a href="#" class="author">Khaled99</a>
+                    <a href="#" class="author">
+                        <?= $author->getUsername() ?>
+                    </a>
                 </div>
-                <img class="card-img-top" src="./router.jpeg" alt="">
+                <img class="card-img-top" src="<?= $picture->getPicturePath() ?>" alt="">
                 <div class="card-body">
                     <div class="reactions">
                         <div class="row">
@@ -25,7 +41,7 @@
                             </div>
                         </div>
                     </div>
-                    <p class="card-text description mt-2" style="font-size: 9pt; color: #888;">lorem ipsum;lasjfdfllorem ipsum;lasjfdfllorem ipsum;lasjfdfllorem ipsum;lasjfdfllorem ipsum;lasjfdfllorem ipsum;lasjfdfllorem ipsum;lasjfdfllorem ipsum;lasjfdfljjjjjjjjlorem ipsum;lasjfdflj</p>
+                    <p class="card-text description mt-2" style="font-size: 9pt; color: #888;"> <?= $picture->getDescription() ?> </p>
                     <hr />
                     <div class="form-group">
                         <div class="input-group">
@@ -35,22 +51,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="comment">
-                        <a href="#" class="author d-inline" style="font-size: 10pt">Khaled99</a>
-                        <p class="comment-content d-inline" style="font-size: 10pt">skladjf;lasjfdflj</p>
-                    </div>
-                    <div class="comment">
-                        <a href="#" class="author d-inline" style="font-size: 10pt">Khaled99</a>
-                        <p class="comment-content d-inline" style="font-size: 10pt">skladjf;lasjfdflj</p>
-                    </div>
-                    <div class="comment">
-                        <a href="#" class="author d-inline" style="font-size: 10pt">Khaled99</a>
-                        <p class="comment-content d-inline" style="font-size: 10pt">lorem ipsum;lasjfdfllorem ipsum;lasjfdfllorem ipsum;lasjfdfllorem ipsum;lasjfdfllorem ipsum;lasjfdfllorem ipsum;lasjfdfllorem ipsum;lasjfdfllorem ipsum;lasjfdfljjjjjjjjlorem ipsum;lasjfdflj</p>
-                    </div>
-                    <div class="comment">
-                        <a href="#" class="author d-inline" style="font-size: 10pt">Khaled99</a>
-                        <p class="comment-content d-inline" style="font-size: 10pt">lorem ipsum;lasjfdfllorem ipsum;lasjfdfllorem ipsum;lasjfdfllorem ipsum;lasjfdfllorem ipsum;lasjfdfllorem ipsum;lasjfdfllorem ipsum;lasjfdfllorem ipsum;lasjfdfljjjjjjjjlorem ipsum;lasjfdflj</p>
-                    </div>
+                        <?php
+                            for($i=0; $i<count($comments); $i++){
+                                echo "<div class='comment'>";
+                                echo "<a href='#' class='author d-inline'>";
+                                echo $comments[$i]['user']->getUsername() . "</a>";
+                                echo "<p class='comment-content d-inline'>";
+                                echo $comments[$i]['comment']->getContent() . "</p>";
+                                echo "</div>";
+                            }
+                        ?>
                 </div>
             </div>
         </div>
