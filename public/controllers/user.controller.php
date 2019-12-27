@@ -1,4 +1,6 @@
 <?php
+include('../../inc/Autoloader.php');
+
 header('Content-Type: application/json;');
 
 use Mapper\UserMapper;
@@ -20,7 +22,7 @@ switch($action){
             $output['error'] = true;
             break;
         }
-        $user = new User(null, $username, password_hash($password, PASSWORD_BCRYPT), $countryID, $email, $bio, null);
+        $user = new User(null, $username, password_hash($password, PASSWORD_BCRYPT), 1, $email, $bio, null);
         UserMapper::add($user);
         break;
 }
