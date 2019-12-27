@@ -29,8 +29,22 @@ class CommentMapper{
         CommentMapper::bindCommentParameters($comment, $stmt);
         $stmt->execute();
     }
+    static function get($commentid){
+        $stmt = DB::prepare('SELECT * FROM Comment WHERE CommentID = :commentid');
+        $stmt->bindParam(':commentid', $commentid);
+        $stmt->execute();
+        $stmt->setFetchMode(\PDO::FETCH_ASSOC);
+
+        $comment = null;
+        if($stmt->rowCount() > 0){
+            $row = $stmt->fetch();
+            $comment = new Comment($row['CommentID'], $row['UserID'], $row['PictureID'], $row['Content'], $row['CreatedAt']);
+        }
+        return $comment;
+
+    }
     static function update(Comment $comment){
-        $stmt = DB::prepare('UPDATE `Comment` SET `CommentID` = :commentid, `UserID` = :userid, `PictureID` = :pictureid,
+        $stmt = DB::prepare('UPDATE `Comment` SET `UserID` = :userid, `PictureID` = :pictureid,
             `Content` = :content, `CreatedAt` = :createdat WHERE `CommentID` = :commentid');
         CommentMapper::bindCommentParameters($comment, $stmt);
         $stmt->execute();
