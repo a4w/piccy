@@ -35,14 +35,15 @@
                         <label for="password">Password: </label>
                         <input id="password" class="form-control"/>
                     </div>
-                    <span class="alert alert-danger d-none" id="status"></span>
-                    <button class="btn btn-dark float-right" id="login"><i class="fas fa-sign-in-alt"></i>&nbsp;Login</button>
+                    <span class="alert alert-danger w-100" style="display: block;" id="status"></span>
+                    <button class="btn btn-dark float-right d-block" id="login"><i class="fas fa-sign-in-alt"></i>&nbsp;Login</button>
                 </div>
             </div>
         </div>
         <script src="./vendor/jquery/js/jquery.min.js"></script>
         <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
         <script>
+        $("#status").hide();
         $("#login").click(function(){
             $("#username").removeClass("border-danger");
             $("#password").removeClass("border-danger");
