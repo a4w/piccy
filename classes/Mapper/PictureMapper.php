@@ -43,4 +43,19 @@ class PictureMapper
         }
         return $picture;
     }
+
+    static function update(Picture $picture){
+        $stmt = DB::prepare('UPDATE Picture SET UserID = :userid, PicturePath = :picturePath,
+                            CreatedAt = :createdAt, Description = :description, AllowComments = :allowComments WHERE PictureID = :pictureid');
+        PictureMapper::bindPictureParameters($picture, $stmt);
+        $stmt->execute();
+
+    }
+    static function delete(Picture $picture){
+        $pictureid = $picture->getPictureID();
+
+        $stmt = DB::prepare('DELETE FROM Picture WHERE PictureID = :pictureid');
+        $stmt->bindParam(':pictureid', $pictureid);
+        $stmt->execute();
+    }
 }
