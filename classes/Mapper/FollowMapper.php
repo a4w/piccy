@@ -5,7 +5,7 @@ use \Model\Follow;
 use PDOStatement;
 use Mapper\DatabaseConnection as DB;
 
-class Follow
+class FollowMapper
 {
     private static function bindPictureParameters(Follow &$follow, PDOStatement &$stmt){
         $follower = $follow->getFollowerUserID();
