@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 27, 2019 at 06:36 PM
+-- Generation Time: Dec 27, 2019 at 07:04 PM
 -- Server version: 5.7.28-0ubuntu0.18.04.4
 -- PHP Version: 7.2.24-0ubuntu0.18.04.1
 
@@ -137,7 +137,7 @@ CREATE TABLE `Reaction` (
   `UserID` int(10) UNSIGNED NOT NULL,
   `PictureID` int(10) UNSIGNED NOT NULL,
   `Type` enum('UPVOTE','DOWNVOTE') COLLATE utf8_bin NOT NULL,
-  `CreatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `CreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -278,13 +278,6 @@ ALTER TABLE `EmailVerification`
 ALTER TABLE `Follow`
   ADD CONSTRAINT `Follow-FollowedUserID-FK` FOREIGN KEY (`FollowedUserID`) REFERENCES `User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `Follow-FollowerUserID-FK` FOREIGN KEY (`FollowerUserID`) REFERENCES `User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `Reaction`
---
-ALTER TABLE `Reaction`
-  ADD CONSTRAINT `Reaction-PictureID-FK` FOREIGN KEY (`PictureID`) REFERENCES `Picture` (`PictureID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `Reaction-UserID-FK` FOREIGN KEY (`UserID`) REFERENCES `User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `User`
