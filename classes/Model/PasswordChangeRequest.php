@@ -31,5 +31,5 @@ class PasswordChangeRequest
     {
         return $this->createdAt;
     }
-    
+
 }
