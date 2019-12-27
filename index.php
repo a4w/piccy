@@ -7,7 +7,9 @@ use Mapper\UserMapper;
 use Model\Comment;
 use Model\PasswordChangeRequest;
 use Model\Picture;
+use Model\Reaction;
 use Model\User;
 
 include('inc/Autoloader.php');
+
 ?>

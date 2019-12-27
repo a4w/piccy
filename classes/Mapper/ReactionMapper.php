@@ -1,6 +1,7 @@
 <?php
 namespace Mapper;
 
+use Model\Picture;
 use \Model\Reaction;
 use PDOStatement;
 use Mapper\DatabaseConnection as DB;
@@ -29,8 +30,26 @@ class ReactionMapper{
         ReactionMapper::bindReactionParameters($reaction, $stmt);
         $stmt->execute();
     }
+
+    static function getReactionsByPicture(Picture $picture){
+        $pictureid = $picture->getPictureID();
+
+        $stmt = DB::prepare('SELECT * FROM Reaction WHERE PictureID = :pictureid');
+        $stmt->bindParam(':pictureid', $pictureid);
+        $stmt->execute();
+        $stmt->setFetchMode(\PDO::FETCH_ASSOC);
+
+        $reactions = [];
+        if($stmt->rowCount() > 0){
+            while($row = $stmt->fetch()){
+                $reaction = new Reaction($row['ReactionID'], $row['UserID'], $row['PictureID'], $row['Type'], $row['CreatedAt']);
+                $reactions[] = $reaction;
+            }
+        }
+        return $reactions;
+    }
     static function update(Reaction $reaction){
-        $stmt = DB::prepare('UPDATE `Reaction` SET `ReactionID` = :reactionid, `UserID` = :userid, `PictureID` = :pictureid,
+        $stmt = DB::prepare('UPDATE `Reaction` SET `UserID` = :userid, `PictureID` = :pictureid,
             `Type` = :reactionType, `CreatedAt` = :createdat WHERE `ReactionID` = :reactionid');
         ReactionMapper::bindReactionParameters($reaction, $stmt);
         $stmt->execute();
