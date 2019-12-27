@@ -2,3 +2,18 @@
     font-size: 10pt;
     color: #FF0000;
 }
+.user-avatar{
+	border-radius: 99em;
+	background-image: url(./up.jpg);
+	background-position: center;
+	background-size: contain;
+	margin-right: 5px;
+	width:50px;
+	height:50px;
+}
+.author{
+	font-size: 10pt;
+}
+.comment-content{
+	font-size: 10pt;
+}
