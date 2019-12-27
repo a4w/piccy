@@ -22,9 +22,14 @@ class DatabaseConnection{
         return DatabaseConnection::$instance;
     }
 
+    /*
+     * A wrapper function for PDO::prepare();
+     * @param string $statment
+     */
     public static function prepare($statment){
         $db = DatabaseConnection::getInstance();
-        return $db::prepare($statment);
+        // $db->link->prepare() is a method in PDO class itself, different from this on DatabaseConnection::prepare();
+        return $db->link->prepare($statment);
     }
 
 }
