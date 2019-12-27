@@ -11,5 +11,7 @@ use Model\Reaction;
 use Model\User;
 
 include('inc/Autoloader.php');
-
+    $picture = PictureMapper::get(2);
+    $comments[] = CommentMapper::getAllComments($picture);
+    var_dump($comments);
 ?>

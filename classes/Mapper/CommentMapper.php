@@ -2,6 +2,7 @@
 namespace Mapper;
 
 use \Model\Comment;
+use Model\Picture;
 use PDOStatement;
 use Mapper\DatabaseConnection as DB;
 
@@ -42,6 +43,22 @@ class CommentMapper{
         }
         return $comment;
 
+    }
+    static function getAllComments(Picture $picture){
+        $pictureid = $picture->getPictureID();
+        $stmt = DB::prepare('SELECT * FROM Comment WHERE PictureID = :pictureid');
+        $stmt->bindParam(':pictureid', $pictureid);
+        $stmt->execute();
+        $stmt->setFetchMode(\PDO::FETCH_ASSOC);
+
+        $comments = [];
+        if($stmt->rowCount() > 0){
+            while($row = $stmt->fetch()){
+                $comment = new Comment($row['CommentID'], $row['UserID'], $row['PictureID'], $row['Content'], $row['CreatedAt']);
+                $comments[] = $comment;
+            }
+        }
+        return $comments;
     }
     static function update(Comment $comment){
         $stmt = DB::prepare('UPDATE `Comment` SET `UserID` = :userid, `PictureID` = :pictureid,
