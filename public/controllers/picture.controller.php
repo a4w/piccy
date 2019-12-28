@@ -14,7 +14,7 @@ use Model\REACTION_TYPE;
 
 $action = $_POST['action'] ?? null;
 if (!array_key_exists('user', $_SESSION) || $_SESSION['user'] === NULL) {
-    header('Location: login.php');
+    header('Location: ../login.php');
     exit();
 }
 
@@ -41,10 +41,11 @@ switch($action){
         CommentMapper::add($comment);
         break;
     case 'upload_picture':
+        var_dump($_FILES);
         // Upload picture
         if (isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) {
             $description = $_POST['description'] ?? null;
-            $pic_path = __DIR__ . '/../user_pictures/user_' . $user->getUsername() . '/';
+            $pic_path = 'user_pictures/user_' . $user->getUsername() . '/';
             $file_name = $_FILES['picture']['name'];
             $file_size = $_FILES['picture']['size'];
             $file_tmp = $_FILES['picture']['tmp_name'];
@@ -52,8 +53,9 @@ switch($action){
             $picture_obj = PictureMapper::add($picture_obj);
             $pic_path = $picture_obj->getPicturePath() . $picture_obj->getPictureID();
             $picture_obj->setPicturePath($pic_path);
-            move_uploaded_file($file_tmp, $pic_path);
-            header('Location: wall.php');
+            PictureMapper::update($picture_obj);
+            move_uploaded_file($file_tmp, __DIR__ . '/../'. $pic_path);
+            // header('Location: ../wall.php');
         }
         break;
 }

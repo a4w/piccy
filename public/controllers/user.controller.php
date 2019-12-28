@@ -24,7 +24,7 @@ switch($action){
         }
         $user = new User(null, $username, password_hash($password, PASSWORD_BCRYPT), 1, $email, $bio, null);
         UserMapper::add($user);
-        mkdir(__DIR__ . '/../user_pictures/user_' . $user->getUsername());
+        mkdir(__DIR__ . '/../user_pictures/user_' . $user->getUsername(), 0777);
         session_start();
         $_SESSION['user'] = UserMapper::getByUsername($username);
         $_SESSION['login-time'] = time();
