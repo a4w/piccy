@@ -57,6 +57,9 @@ switch($action){
     case 'addcomment':
         $pictureID = $_POST['PictureID'] ?? null;
         $content = $_POST['comment'] ?? null;
+        if($content == null){
+            break;
+        }
         $comment = new Comment(null, $userID, $pictureID, $content, null);
         CommentMapper::add($comment);
         break;
@@ -68,6 +71,10 @@ switch($action){
             $file_name = $_FILES['picture']['name'];
             $file_size = $_FILES['picture']['size'];
             $file_tmp = $_FILES['picture']['tmp_name'];
+            if( !(@is_array(getimagesize($file_tmp))) ){ /// asserting file is an image
+                echo "File is not a valid image";
+                exit();
+            }
             $picture_obj = new Picture(null, $userID, $pic_path, null, $description, true);
             $picture_obj = PictureMapper::add($picture_obj);
             $pic_path = $picture_obj->getPicturePath() . $picture_obj->getPictureID();

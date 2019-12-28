@@ -17,6 +17,18 @@ switch($action){
         $password = $_POST['password'] ?? null;
         $email = $_POST['email'] ?? null;
         $bio = $_POST['bio'] ?? null;
+        if($username == null || $password == null || $email == null){
+            break;
+        }
+        if(strlen($username) < 4 || strlen($username) > 50){
+            break;
+        }
+        if(strlen($password) < 4 || strlen($password) > 50){
+            break;
+        }
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+            break;
+        }
         $user = UserMapper::getByUsername($username);
         if($user !== null){
             $output['error'] = true;

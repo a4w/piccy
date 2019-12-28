@@ -63,7 +63,7 @@ $showUnfollow &= ($visitedUserID != $visitorUserID);
             <a class="hidden_link" href="upload_pic.php"><i class="fas fa-plus"></i></a>
         </div>
         <div class="col-3 text-center">
-            <a class="hidden_link" href="profile.php?id=<?= $user->getUserID() ?>"><i class="fas fa-user active-place"></i></a>
+            <a class="hidden_link" href="profile.php?id=<?= htmlspecialchars($user->getUserID()) ?>"><i class="fas fa-user active-place"></i></a>
         </div>
     </div>
     <div class="row topbar justify-content-center">
@@ -74,19 +74,19 @@ $showUnfollow &= ($visitedUserID != $visitorUserID);
     <div style="height: 55px"></div>
     <div class="row">
         <div class="col-6">
-            <span class="username"><?=$visitedUser->getUsername()?></span>
-            <a href="mailto:<?=$visitedUser->getEmail()?>" class="email"><?=$visitedUser->getEmail()?></a>
+            <span class="username"><?=htmlspecialchars($visitedUser->getUsername())?></span>
+            <a href="mailto:<?=htmlspecialchars($visitedUser->getEmail())?>" class="email"><?=htmlspecialchars($visitedUser->getEmail())?></a>
         </div>
         <div class="col-3">
             <span class="f-title">Followers</span>
-            <span number="<?=$numberOfFollowers?>" class="followers" id="numberOfFollowers"><?=$numberOfFollowers ?></span>
+            <span number="<?=htmlspecialchars($numberOfFollowers)?>" class="followers" id="numberOfFollowers"><?=htmlspecialchars($numberOfFollowers)?></span>
         </div>
         <div class="col-3">
             <span class="f-title">Following</span>
-            <span class="following"><?=$numberOfFollowing ?></span>
+            <span class="following"><?=htmlspecialchars($numberOfFollowing) ?></span>
         </div>
         <div class="col-6">
-            <span class="bio"><?=$visitedUser->getBio()?></span>
+            <span class="bio"><?=htmlspecialchars($visitedUser->getBio())?></span>
         </div>
         <div class="col-6">
             <?php
