@@ -46,3 +46,13 @@
 .hidden_link{
     color: #FFF;
 }
+.delete-pic{
+    position: absolute;
+    right: 4;
+    margin-top: 3px;
+}
+.picture{
+    width: auto !important;
+    max-width: 300px;
+    max-height: 300px;
+}

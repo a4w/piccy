@@ -4,9 +4,9 @@
             <?= $author->getUsername() ?>
         </a>
     </div>
-    <div>
-        <button class="btn btn-danger btn-sm <?=$isPictureAuthor ? 'd-inline' : 'd-none'?>" style="position: absolute; right: 4;margin-top: 3px;"><i class="fas fa-trash"></i></button>
-        <img class="card-img-top" src="<?= htmlspecialchars($picture->getPicturePath()) ?>" alt="">
+    <div class="d-flex justify-content-center">
+        <button class="btn btn-danger btn-sm delete-pic <?=$isPictureAuthor ? 'd-inline' : 'd-none'?>" data-picture="<?=$picture->getPictureId()?>"><i class="fas fa-trash"></i></button>
+        <img class="card-img-top picture" src="<?= htmlspecialchars($picture->getPicturePath()) ?>" alt="">
     </div>
     <div class="card-body">
         <div class="reactions">

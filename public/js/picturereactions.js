@@ -38,3 +38,12 @@ $(".comment-btn").click(function(){
         comment.val("");
 	});
 });
+$(".delete-pic").click(function(){
+	const PictureID = $(this).attr("data-picture");
+    $.post("controllers/picture.controller.php", {
+        action: "delete-picture",
+        PictureID: PictureID
+    }).done(function(data){
+        window.location.reload(true);
+    });
+});

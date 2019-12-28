@@ -84,6 +84,14 @@ switch($action){
             header('Location: ../wall.php');
         }
         break;
+    case 'delete-picture':
+        $pictureID = $_POST['PictureID'] ?? null;
+        $picture = PictureMapper::get($pictureID);
+        if($picture->getUserID() !== $user->getUserID()){
+            exit();
+        }
+        PictureMapper::delete($picture);
+        break;
 }
 
 echo json_encode($output);
