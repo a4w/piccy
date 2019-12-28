@@ -46,12 +46,6 @@
                         <input id="email" class="form-control"/>
                     </div>
                     <div class="form-group">
-                        <label for="country">Country: </label>
-                        <select id="country">
-                        
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label for="bio">Bio: </label>
                         <textarea id="bio" class="form-control"></textarea>
                     </div>

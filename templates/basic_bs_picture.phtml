@@ -1,7 +1,6 @@
 <div class="card my-2">
-    <div class="picture-author d-flex align-items-center pb-2">
-        <div class="d-inline-block  user-avatar"></div>
-        <a href="#" class="author">
+    <div class="picture-author d-flex align-items-center pb-2 p-3">
+        <a href="profile.php?id=<?=$author->getUserID()?>" class="author">
             <?= $author->getUsername() ?>
         </a>
     </div>
@@ -36,7 +35,7 @@
             $user = $comments[$i]['user'];
             $userID = $user->getUserId();
             echo "<div class='comment'>";
-            echo "<a href='profile.php?visitedUserID=$userID' class='author d-inline'>";
+            echo "<a href='profile.php?id=$userID' class='author d-inline'>";
             echo $comments[$i]['user']->getUsername() . " " ."</a>";
             echo "<p class='comment-content d-inline'>";
             echo $comments[$i]['comment']->getContent() . "</p>";
