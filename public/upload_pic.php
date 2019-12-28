@@ -31,7 +31,7 @@ if(!isset($_SESSION['user']) || $_SESSION['user'] === null)
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-4">
-                    <form action="controllers/picture.controller.php" method="POST">
+                    <form action="controllers/picture.controller.php" enctype="multipart/form-data" method="POST">
                         <input type="hidden" name="action" value="upload_picture" />
                         <h2 class="text-center sub-title">Upload picture</h2>
                         <input type="file" name="picture" id="picture_uploaded" style="display: none" />

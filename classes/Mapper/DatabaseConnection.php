@@ -10,7 +10,7 @@ class DatabaseConnection{
 
     private const HOST = '127.0.0.1';
     private const USERNAME = 'root';
-    private const PASSWORD = '';
+    private const PASSWORD = '12341234';
     private const NAME = 'Piccy';
 
     private $link;
@@ -35,6 +35,11 @@ class DatabaseConnection{
         $db = DatabaseConnection::getInstance();
         // $db->link->prepare() is a method in PDO class itself, different from this on DatabaseConnection::prepare();
         return $db->link->prepare($statment);
+    }
+
+    public static function getLastInsertID(){
+        $db = DatabaseConnection::getInstance();
+        return $db->link->lastInsertId();
     }
 
 }
