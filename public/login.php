@@ -1,3 +1,8 @@
+<?php
+session_start();
+if($_SESSION['user'] !== null)
+    header('Location: wall.php');
+?>
 <html>
     <head>
         <title>Login</title>
