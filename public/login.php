@@ -47,7 +47,7 @@
         $("#login").click(function(){
             $("#username").removeClass("border-danger");
             $("#password").removeClass("border-danger");
-			$("#status").hide();
+            $("#status").hide();
             $(".field-error").remove();
             if($("#username").val() === ""){
                 $("#username").addClass("border-danger");
@@ -66,7 +66,7 @@
                }
             ).done(function(data){
                 if(data.error){
-					$("#status").show();
+                    $("#status").show();
                     $("#status").text("Incorrect username or password!");
                 }else{ }
             });

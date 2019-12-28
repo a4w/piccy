@@ -33,6 +33,9 @@ switch($action){
             $output['error'] = true;
             break;
         }
+        session_start();
+        $_SESSION['user'] = $user;
+        $_SESSION['login-timeout'] = time();
         break;
 }
 
