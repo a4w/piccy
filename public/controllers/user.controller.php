@@ -24,9 +24,10 @@ switch($action){
         }
         $user = new User(null, $username, password_hash($password, PASSWORD_BCRYPT), 1, $email, $bio, null);
         UserMapper::add($user);
+        mkdir(__DIR__ . '/../user_pictures/user_' . $user->getUsername());
         session_start();
         $_SESSION['user'] = $user;
-        $_SESSION['login-timeout'] = time();
+        $_SESSION['login-time'] = time();
         break;
     case 'login':
         $username = $_POST['username'] ?? null;
@@ -38,7 +39,7 @@ switch($action){
         }
         session_start();
         $_SESSION['user'] = $user;
-        $_SESSION['login-timeout'] = time();
+        $_SESSION['login-time'] = time();
         break;
 }
 
