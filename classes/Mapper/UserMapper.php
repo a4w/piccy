@@ -48,7 +48,7 @@ class UserMapper{
     }
     static function getBySimilarUsername($username){
         $username = '%' . $username . '%';
-        $stmt = DB::prepare('SELECT * FROM User WHERE Username LIKE :username');
+        $stmt = DB::prepare('SELECT * FROM User WHERE Username COLLATE UTF8_GENERAL_CI LIKE :username');
         $stmt->bindParam(':username', $username);
         $stmt->execute();
         $stmt->setFetchMode(\PDO::FETCH_ASSOC);
