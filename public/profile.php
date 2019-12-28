@@ -10,6 +10,7 @@ if (!isset($_SESSION['user']))
     header('Location: login.php');
 
 $visitor = $_SESSION['user'];
+$visitorUserID = $visitor->getUserId();
 $visitedUserID = $_GET['visitedUserID'];
 $visitedUser = UserMapper::get($visitedUserID);
 $pictures = PictureMapper::getUserPictures($visitedUser);
@@ -39,14 +40,14 @@ $pictures = PictureMapper::getUserPictures($visitedUser);
         <?php
         if ($visitedUser->getUserId() !== $visitor->getUserId()){
             if (FollowMapper::exists($visitor->getUserId(), $visitedUser->getUserId())){
-                echo '<div class="col-auto">
-                    <button class="btn btn-sm btn-danger unfollow"><i class="fas fa-arrow-up"></i></button>
-                </div>';
+                echo "<div class='col-auto'>
+                    <button class='btn btn-sm btn-danger' id='unfollow' followerID=$visitorUserID followedID=$visitedUserID><i class='fas fa-arrow-down'></i></button>
+                </div>";
             }
             else{
-                echo '<div class="col-auto">
-                    <button class="btn btn-sm btn-success follow"><i class="fas fa-arrow-up"></i></button>
-                </div>';
+                echo "<div class='col-auto'>
+                    <button class='btn btn-sm btn-success' id='follow' followerID=$visitorUserID followedID=$visitedUserID><i class='fas fa-arrow-up'></i></button>
+                </div>";
             }
         }
         ?>
@@ -66,7 +67,7 @@ $pictures = PictureMapper::getUserPictures($visitedUser);
 </div>
 <script src="./vendor/jquery/js/jquery.min.js"></script>
 <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
-<script src="js/picturereactions.js"></script>
+<script src="js/follow.js"></script>
 <script>
 </script>
 </body>
