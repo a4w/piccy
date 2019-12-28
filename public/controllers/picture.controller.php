@@ -19,7 +19,6 @@ $userID = $user->getUserId();
 switch($action){
     case 'upvote':
 		$pictureID = $_POST['PictureID'] ?? null;
-		// TODO: get user id from session
         $reaction = new Reaction(null, $userID, $pictureID, "UPVOTE",null);
         ReactionMapper::add($reaction);
         break;

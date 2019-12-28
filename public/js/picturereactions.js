@@ -4,7 +4,9 @@ $(".upvote").click(function(){
 	$.post("controllers/picture.controller.php",{
 			"action":"upvote",
 			"PictureID":PictureID
-	}).done(function(data){});
+	}).done(function(data){
+
+	});
 });
 $(".downvote").click(function(){
 	const PictureID = $(this).attr("data-picture");
