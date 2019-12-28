@@ -4,7 +4,7 @@
             <?= $author->getUsername() ?>
         </a>
     </div>
-    <img class="card-img-top" src="<?= $picture->getPicturePath() ?>" alt="">
+    <img class="card-img-top" src="<?= htmlspecialchars($picture->getPicturePath()) ?>" alt="">
     <div class="card-body">
         <div class="reactions">
             <div class="row">
@@ -20,7 +20,7 @@
                 </div>
             </div>
         </div>
-        <p class="card-text description mt-2" style="font-size: 9pt; color: #888;"> <?= $picture->getDescription() ?> </p>
+        <p class="card-text description mt-2" style="font-size: 9pt; color: #888;"> <?= htmlspecialchars($picture->getDescription()) ?> </p>
         <hr />
         <div class="form-group">
             <div class="input-group">
@@ -36,9 +36,9 @@
             $userID = $user->getUserId();
             echo "<div class='comment'>";
             echo "<a href='profile.php?id=$userID' class='author d-inline'>";
-            echo $comments[$i]['user']->getUsername() . " " ."</a>";
+            echo htmlspecialchars($comments[$i]['user']->getUsername()) . " " ."</a>";
             echo "<p class='comment-content d-inline'>";
-            echo $comments[$i]['comment']->getContent() . "</p>";
+            echo htmlspecialchars($comments[$i]['comment']->getContent()) . "</p>";
             echo "</div>";
         }
         ?>

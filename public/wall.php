@@ -33,7 +33,7 @@ $pictures = PictureMapper::getWallPictures($user);
                     <a class="hidden_link" href="upload_pic.php"><i class="fas fa-plus"></i></a>
                 </div>
                 <div class="col-3 text-center">
-                    <a class="hidden_link" href="profile.php?id=<?= $user->getUserID() ?>"><i class="fas fa-user"></i></a>
+                    <a class="hidden_link" href="profile.php?id=<?= htmlspecialchars($user->getUserID()) ?>"><i class="fas fa-user"></i></a>
                 </div>
             </div>
             <div class="row topbar justify-content-center">
