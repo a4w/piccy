@@ -63,10 +63,11 @@ $userID = $user->getUserId();
         <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
         <script>
             $("#search").keyup(function(){
-                $("#results").children().remove();
+                $("#results").empty();
                 if($("#search").val() === "")
                     return;
                 $.post("controllers/search.controller.php", {'sought-username' : $("#search").val(), action: 'search'}).done(function(data){
+                    $("#results").empty();
                     for(let i = 0; i < data.users.length; ++i){
                         $("#results").append(" <div class='search-result'> <a href='profile.php?id="+data.users[i].userid+"'>" + data.users[i].username + "</a> </div>");
                     }
