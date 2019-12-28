@@ -35,5 +35,6 @@ $(".comment-btn").click(function(){
 		"comment":comment.val(),
 		"PictureID":PictureID
 	}).done(function(data){
+        comment.val("");
 	});
 });

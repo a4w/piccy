@@ -46,7 +46,7 @@ class CommentMapper{
     }
     static function getAllComments(Picture $picture){
         $pictureid = $picture->getPictureID();
-        $stmt = DB::prepare('SELECT * FROM Comment WHERE PictureID = :pictureid');
+        $stmt = DB::prepare('SELECT * FROM Comment WHERE PictureID = :pictureid ORDER BY `CreatedAt` ASC');
         $stmt->bindParam(':pictureid', $pictureid);
         $stmt->execute();
         $stmt->setFetchMode(\PDO::FETCH_ASSOC);
