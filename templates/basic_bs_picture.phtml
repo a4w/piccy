@@ -10,14 +10,14 @@
         <div class="reactions">
             <div class="row">
                 <div class="col-auto">
-                    <button class="btn btn-sm btn-success upvote" data-picture="<?= $picture->getPictureId()?>"><i class="fas fa-arrow-up"></i></button>
+                    <button class="btn btn-sm btn-success upvote" data-picture="<?php echo $picture->getPictureId()?>"><i class="fas fa-arrow-up"></i></button>
                 </div>
                 <div class="col">
                     <span class="upvote-count text-success float-left"><?= $upvoteCount?></span>
                     <span class="upvote-count text-danger float-right"><?= $downvoteCount?></span>
                 </div>
                 <div class="col-auto">
-                    <button class="btn btn-sm btn-danger downvote" data-picture="<?= $picture->getPictureId()?>"><i class="fas fa-arrow-down"></i></button>
+                    <button class="btn btn-sm btn-danger downvote" data-picture="<?php echo $picture->getPictureId()?>"><i class="fas fa-arrow-down"></i></button>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
             <div class="input-group">
                 <input placeholder="Comment on this post" class="form-control" />
                 <div class="input-group-append">
-                    <button class="btn btn-primary comment" data-picture="<?= $picture->getPictureId()?>"><i class="fas fa-comment"></i></button>
+                    <button class="btn btn-primary comment" data-picture="<?php echo $picture->getPictureId()?>"><i class="fas fa-comment"></i></button>
                 </div>
             </div>
         </div>
