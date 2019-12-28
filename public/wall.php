@@ -3,8 +3,14 @@ include('./../inc/Autoloader.php');
 use Mapper\PictureMapper;
 use Mapper\UserMapper;
 use View\PictureView;
+session_start();
 
-$pictures = PictureMapper::getWallPictures(UserMapper::getByUsername('ahmad'));
+if (!isset($_SESSION['user']))
+    header('Location: login.php');
+
+$user = $_SESSION['user'];
+$userID = $user->getUserId();
+$pictures = PictureMapper::getWallPictures(UserMapper::getByUsername('abdo'));
 ?>
 <html>
     <head>

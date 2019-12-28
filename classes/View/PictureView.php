@@ -16,7 +16,7 @@ class PictureView extends View{
     private $downvoteCount = 0, $upvoteCount = 0;
     function __construct(Picture $picture, $template = null){
         $this->picture = $picture;
-        $this->author = UserMapper::getByUsername('ahmad');
+        $this->author = UserMapper::get($picture->getUserID());
         $comments = CommentMapper::getAllComments($picture);
         $reactions = ReactionMapper::getReactionsByPicture($picture);
         foreach($comments as $comment){

@@ -25,7 +25,7 @@ switch($action){
         $user = new User(null, $username, password_hash($password, PASSWORD_BCRYPT), 1, $email, $bio, null);
         UserMapper::add($user);
         session_start();
-        $_SESSION['user'] = $user;
+        $_SESSION['user'] = UserMapper::getByUsername($username);
         $_SESSION['login-timeout'] = time();
         break;
     case 'login':
