@@ -4,10 +4,9 @@ namespace View;
 use Mapper\CommentMapper;
 use Mapper\UserMapper;
 use Model\Picture;
+use Model\User;
 use Mapper\ReactionMapper;
-use Model\Reaction;
 use Model\REACTION_TYPE;
-use Util\Util;
 
 class PictureView extends View{
     const TEMPLATE = 'basic_bs_picture.phtml';
@@ -15,9 +14,10 @@ class PictureView extends View{
     private $author;
     private $comments = array();
     private $downvoteCount = 0, $upvoteCount = 0;
-    function __construct(Picture $picture, $template = null){
+    function __construct(User $loggedIn, Picture $picture, $template = null){
         $this->picture = $picture;
         $this->author = UserMapper::get($picture->getUserID());
+        $this->isPictureAuthor = $this->author == $loggedIn;
         $comments = CommentMapper::getAllComments($picture);
         $this->downvoteCount = ReactionMapper::getNumberOfReactsTypeByPicture($picture, REACTION_TYPE::DOWNVOTE);
         $this->upvoteCount = ReactionMapper::getNumberOfReactsTypeByPicture($picture, REACTION_TYPE::UPVOTE);
@@ -37,13 +37,14 @@ class PictureView extends View{
 
     function render($data = array(), $returnOnly = false){
         // Just alias what's important to reduce code in view template
-        $data = array(
+        $data = array_merge($data, array(
             'author' => $this->author,
             'picture' => $this->picture,
             'comments' => $this->comments,
             'downvoteCount' => $this->downvoteCount,
-            'upvoteCount' => $this->upvoteCount
-        );
+            'upvoteCount' => $this->upvoteCount,
+            'isPictureAuthor' => $this->isPictureAuthor
+        ));
         return parent::render($data, $returnOnly);
     }
 }

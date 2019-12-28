@@ -46,7 +46,7 @@ $pictures = PictureMapper::getWallPictures($user);
                 <div class="col-12 col-lg-4">
 <?php
 foreach($pictures as $picture){
-    (new PictureView($picture))->render();
+    (new PictureView($user, $picture))->render();
 }
 ?>
                 </div>

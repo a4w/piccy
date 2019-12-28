@@ -53,6 +53,16 @@ switch($action){
         $_SESSION['user'] = $user;
         $_SESSION['login-time'] = time();
         break;
+    case 'edit-bio':
+        session_start();
+        if (!isset($_SESSION['user'])){
+            exit();
+        }
+        $user = $_SESSION['user'];
+        $bio = $_POST['bio'] ?? null;
+        $user->setBio($bio);
+        UserMapper::update($user);
+        break;
 }
 
 echo json_encode($output);

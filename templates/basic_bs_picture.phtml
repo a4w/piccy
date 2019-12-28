@@ -4,7 +4,10 @@
             <?= $author->getUsername() ?>
         </a>
     </div>
-    <img class="card-img-top" src="<?= htmlspecialchars($picture->getPicturePath()) ?>" alt="">
+    <div>
+        <button class="btn btn-danger btn-sm <?=$isPictureAuthor ? 'd-inline' : 'd-none'?>" style="position: absolute; right: 4;margin-top: 3px;"><i class="fas fa-trash"></i></button>
+        <img class="card-img-top" src="<?= htmlspecialchars($picture->getPicturePath()) ?>" alt="">
+    </div>
     <div class="card-body">
         <div class="reactions">
             <div class="row">

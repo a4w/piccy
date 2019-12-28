@@ -43,6 +43,9 @@ class User
     public function getBio(){
         return $this->bio;
     }
+    public function setBio($bio){
+        $this->bio = $bio;
+    }
     public function getProfilePicturePath(){
         return $this->profilePicturePath;
     }

@@ -86,7 +86,7 @@ $showUnfollow &= ($visitedUserID != $visitorUserID);
             <span class="following"><?=htmlspecialchars($numberOfFollowing) ?></span>
         </div>
         <div class="col-6">
-            <span class="bio"><?=htmlspecialchars($visitedUser->getBio())?></span>
+            <span class="bio"><?=htmlspecialchars($visitedUser->getBio())?>&nbsp;<button id="edit-bio" class="btn btn-sm btn-light <?=$showFollow || $showUnfollow ? 'd-none' : 'd-inline' ?>"><i class="fas fa-pen"></i></button></span>
         </div>
         <div class="col-6">
             <?php
@@ -99,7 +99,7 @@ $showUnfollow &= ($visitedUserID != $visitorUserID);
         <div class="col-12 col-lg-4">
             <?php
             foreach($pictures as $picture){
-                (new PictureView($picture))->render();
+                (new PictureView($user, $picture))->render();
             }
             ?>
         </div>
@@ -111,6 +111,12 @@ $showUnfollow &= ($visitedUserID != $visitorUserID);
 <script src="js/follow.js"></script>
 <script src="./js/picturereactions.js"></script>
 <script>
+                $("#edit-bio").click(function(){
+                    const nBio = prompt("Enter your new bio");
+                    $.post("controllers/user.controller.php", {action: "edit-bio", bio: nBio}).done(function(data){
+                        window.location.reload(true);
+                    });
+                });
 </script>
 </body>
 </html>
