@@ -10,7 +10,7 @@ class DatabaseConnection{
 
     private const HOST = '127.0.0.1';
     private const USERNAME = 'root';
-    private const PASSWORD = '12341234';
+    private const PASSWORD = '';
     private const NAME = 'Piccy';
 
     private $link;

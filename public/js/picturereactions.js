@@ -6,6 +6,7 @@ $(".upvote").click(function(){
 			"PictureID":PictureID
 	}).done(function(data){
 		btn.parent().parent().find(".upvote-count").text(data.numberOfUpvotes);
+		btn.parent().parent().find(".downvote-count").text(data.numberOfDownvotes);
 	});
 });
 $(".downvote").click(function(){
@@ -15,6 +16,7 @@ $(".downvote").click(function(){
 			"action":"downvote",
 			"PictureID":PictureID
 	}).done(function(data){
+		btn.parent().parent().find(".upvote-count").text(data.numberOfUpvotes);
 		btn.parent().parent().find(".downvote-count").text(data.numberOfDownvotes);
 	});
 });
