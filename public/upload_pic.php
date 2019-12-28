@@ -56,7 +56,7 @@ if(!isset($_SESSION['user']) || $_SESSION['user'] === null)
                 let reader = new FileReader();
                 reader.onloadend = function(){
                     $("#upload_preview").attr("src", reader.result);
-                }
+                };
                 if(file){
                     reader.readAsDataURL(file);
                 }

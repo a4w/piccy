@@ -92,7 +92,6 @@
                 $("#email").addClass("border-danger");
                 $("#email").parent().append("<span class ='field-error'>Please enter an valid e-mail</span>");
                 return;
-
             }
             $.post("controllers/user.controller.php", {
                 "action" : "register",
