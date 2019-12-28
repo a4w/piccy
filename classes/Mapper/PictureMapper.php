@@ -58,9 +58,11 @@ class PictureMapper
     }
 
     static function getWallPictures(User $user){
-        $stmt = DB::prepare('SELECT * FROM `Picture`');
+        $stmt = DB::prepare('SELECT * FROM Picture WHERE UserID 
+                                      IN(SELECT FollowedUserID FROM Follow WHERE FollowerUserID = :userid)
+                                       ORDER BY CreatedAt DESC');
         $user_id = $user->getUserID();
-        //$stmt->bindParam(':userid', $user_id);
+        $stmt->bindParam(':userid', $user_id);
         $stmt->execute();
         $stmt->setFetchMode(\PDO::FETCH_ASSOC);
         $pictures = [];

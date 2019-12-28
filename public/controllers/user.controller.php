@@ -24,6 +24,9 @@ switch($action){
         }
         $user = new User(null, $username, password_hash($password, PASSWORD_BCRYPT), 1, $email, $bio, null);
         UserMapper::add($user);
+        session_start();
+        $_SESSION['user'] = $user;
+        $_SESSION['login-timeout'] = time();
         break;
     case 'login':
         $username = $_POST['username'] ?? null;
@@ -33,6 +36,9 @@ switch($action){
             $output['error'] = true;
             break;
         }
+        session_start();
+        $_SESSION['user'] = $user;
+        $_SESSION['login-timeout'] = time();
         break;
 }
 
