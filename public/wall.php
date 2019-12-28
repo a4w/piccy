@@ -10,7 +10,7 @@ if (!isset($_SESSION['user']))
 
 $user = $_SESSION['user'];
 $userID = $user->getUserId();
-$pictures = PictureMapper::getWallPictures(UserMapper::getByUsername('abdo'));
+$pictures = PictureMapper::getWallPictures($user);
 ?>
 <html>
     <head>
