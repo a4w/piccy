@@ -41,12 +41,12 @@ $pictures = PictureMapper::getUserPictures($visitedUser);
         if ($visitedUser->getUserId() !== $visitor->getUserId()){
             if (FollowMapper::exists($visitor->getUserId(), $visitedUser->getUserId())){
                 echo "<div class='col-auto'>
-                    <button class='btn btn-sm btn-danger' id='unfollow' followerID=$visitorUserID followedID=$visitedUserID><i class='fas fa-arrow-down'></i></button>
+                    <button class='btn btn-sm btn-danger' id='unfollow' followedUserID=$visitedUserID><i class='fas fa-arrow-down'></i></button>
                 </div>";
             }
             else{
                 echo "<div class='col-auto'>
-                    <button class='btn btn-sm btn-success' id='follow' followerID=$visitorUserID followedID=$visitedUserID><i class='fas fa-arrow-up'></i></button>
+                    <button class='btn btn-sm btn-success' id='follow' followedUserID=$visitedUserID><i class='fas fa-arrow-up'></i></button>
                 </div>";
             }
         }

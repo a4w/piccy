@@ -1,8 +1,18 @@
 $("#follow").click(function(){
-	const followerID = $(this).attr("follower");
-	$.post("profile.controller.php",{
+	const followedUserID = $(this).attr("followedUserID");
+	$.post("controllers/profile.controller.php",{
 	"action":"follow",
-	"PictureID":PictureID
+	"FollowedUserID":followedUserID
+	}).done(function(data){
+
+	});
+});
+
+$("#unfollow").click(function(){
+	const followedUserID = $(this).attr("followedUserID");
+	$.post("controllers/profile.controller.php",{
+		"action":"unfollow",
+		"UnfollowedUserID":followedUserID
 	}).done(function(data){
 
 	});
