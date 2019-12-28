@@ -8,6 +8,8 @@ use Mapper\ReactionMapper;
 use Model\Reaction;
 use Model\Comment;
 use Mapper\CommentMapper;
+use Mapper\PictureMapper;
+use Model\REACTION_TYPE;
 $action = $_POST['action'] ?? null;
 if (!array_key_exists('user', $_SESSION) || $_SESSION['user'] === NULL) {
     header('Location: login.php');
@@ -22,11 +24,13 @@ switch($action){
 		$pictureID = $_POST['PictureID'] ?? null;
         $reaction = new Reaction(null, $userID, $pictureID, "UPVOTE",null);
         ReactionMapper::add($reaction);
+        $output['numberOfUpvotes'] = ReactionMapper::getNumberOfReactsTypeByPicture(PictureMapper::get($pictureID), REACTION_TYPE::UPVOTE);
         break;
     case 'downvote':
         $pictureID = $_POST['PictureID'] ?? null;
         $reaction = new Reaction(null, $userID, $pictureID, "DOWNVOTE",null);
         ReactionMapper::add($reaction);
+        $output['numberOfDownvotes'] = ReactionMapper::getNumberOfReactsTypeByPicture(PictureMapper::get($pictureID), REACTION_TYPE::DOWNVOTE);
         break;
 	case 'addcomment':
 		$pictureID = $_POST['PictureID'] ?? null;

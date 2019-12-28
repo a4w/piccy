@@ -7,6 +7,7 @@ use Model\Picture;
 use Mapper\ReactionMapper;
 use Model\Reaction;
 use Model\REACTION_TYPE;
+use Util\Util;
 
 class PictureView extends View{
     const TEMPLATE = 'basic_bs_picture.phtml';
@@ -18,7 +19,8 @@ class PictureView extends View{
         $this->picture = $picture;
         $this->author = UserMapper::get($picture->getUserID());
         $comments = CommentMapper::getAllComments($picture);
-        $reactions = ReactionMapper::getReactionsByPicture($picture);
+        $this->downvoteCount = ReactionMapper::getNumberOfReactsTypeByPicture($picture, REACTION_TYPE::DOWNVOTE);
+        $this->upvoteCount = ReactionMapper::getNumberOfReactsTypeByPicture($picture, REACTION_TYPE::UPVOTE);
         foreach($comments as $comment){
             $tmp = array(
                 'comment' => $comment,
@@ -26,12 +28,7 @@ class PictureView extends View{
             );
             $this->comments[] = $tmp;
         }
-        foreach($reactions as $reaction){
-            if ($reaction->getType() === REACTION_TYPE::DOWNVOTE)
-                $this->downvoteCount++;
-            else
-                $this->upvoteCount++;
-        }
+
         if($template === null)
             parent::__construct(self::TEMPLATE);
         else
