@@ -68,7 +68,9 @@
                 if(data.error){
                     $("#status").show();
                     $("#status").text("Incorrect username or password!");
-                }else{ }
+                }else{
+                    window.location.href = "wall.php";
+                }
             });
         });
         </script>
