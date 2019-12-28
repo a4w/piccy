@@ -61,4 +61,33 @@ class FollowMapper
         self::bindParameters( $follow, $stmt);
         $stmt->execute();
     }
+
+    static function getNumberOfFollowing(User $user){
+        return sizeof(FollowMapper::getAllFollowsByUser($user));
+    }
+
+    static function getAllUserFollowers($user){
+        $userid = $user->getUserID();
+        $stmt = DB::prepare('SELECT * FROM Follow WHERE FollowedUserID = :userid');
+        $stmt->bindParam(':userid', $userid);
+        $stmt->execute();
+        $stmt->setFetchMode(\PDO::FETCH_ASSOC);
+
+        $follows = [];
+        if ($stmt->rowCount() > 0){
+            while ($row = $stmt->fetch()) {
+                $follow = new Follow($row['FollowerUserID'], $row['FollowedUserID']);
+                $follows[] = $follow;
+            }
+        }
+        return $follows;
+    }
+
+    static function getNumberOfFollowers(User $user){
+        return sizeof(FollowMapper::getAllUserFollowers($user));
+    }
+
+    static function exists($followerID, $followedID){
+        return FollowMapper::get($followerID, $followedID) !== NULL;
+    }
 }

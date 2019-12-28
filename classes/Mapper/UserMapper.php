@@ -46,6 +46,23 @@ class UserMapper{
         }
         return $user;
     }
+    static function getBySimilarUsername($username){
+        $username = '%' . $username . '%';
+        $stmt = DB::prepare('SELECT * FROM User WHERE Username LIKE :username');
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        $stmt->setFetchMode(\PDO::FETCH_ASSOC);
+
+        $users = [];
+        if($stmt->rowCount() > 0){
+            while($row = $stmt->fetch()){
+                $user = new User($row['UserID'], $row['Username'], $row['Password'], $row['CountryID'], $row['Email'],
+                                $row['Bio'], $row['ProfilePicturePath']);
+                $users[] = $user;
+            }
+        }
+        return $users;
+    }
     static function getByUsername($username){
         $stmt = DB::prepare('SELECT * FROM User WHERE Username = :username');
         $stmt->bindParam(':username', $username);

@@ -21,17 +21,18 @@ if (!array_key_exists('user', $_SESSION) || $_SESSION['user'] === NULL) {
 $output = array("error" => false);
 $user = $_SESSION['user'];
 $userID = $user->getUserID();
-var_dump($user);
 switch($action){
     case 'upvote':
         $pictureID = $_POST['PictureID'] ?? null;
         $reaction = new Reaction(null, $userID, $pictureID, REACTION_TYPE::UPVOTE,null);
         ReactionMapper::add($reaction);
+        $output['numberOfUpvotes'] = ReactionMapper::getNumberOfReactsTypeByPicture(PictureMapper::get($pictureID), REACTION_TYPE::UPVOTE);
         break;
     case 'downvote':
         $pictureID = $_POST['PictureID'] ?? null;
         $reaction = new Reaction(null, $userID, $pictureID, REACTION_TYPE::DOWNVOTE,null);
         ReactionMapper::add($reaction);
+        $output['numberOfDownvotes'] = ReactionMapper::getNumberOfReactsTypeByPicture(PictureMapper::get($pictureID), REACTION_TYPE::DOWNVOTE);
         break;
     case 'addcomment':
         $pictureID = $_POST['PictureID'] ?? null;
