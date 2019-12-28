@@ -5,6 +5,7 @@ use Model\Picture;
 use \Model\Reaction;
 use PDOStatement;
 use Mapper\DatabaseConnection as DB;
+use Model\REACTION_TYPE;
 
 /**
  * Maps a Reaction object to a database row
@@ -57,5 +58,21 @@ class ReactionMapper{
         $id = $reaction->getReactionId();
         $stmt->bindParam(':reactionid', $id);
         $stmt->execute();
+    }
+
+    static function getNumberOfReactsTypeByPicture($picture, $type)
+    {
+        $reactions = ReactionMapper::getReactionsByPicture($picture);
+        return ReactionMapper::getNumberOfReactsType($reactions, $type);
+    }
+
+    static function getNumberOfReactsType($reactions, REACTION_TYPE $type)
+    {
+        $count = 0;
+        foreach ($reactions as $reaction) {
+            if ($reaction->getType() === $type)
+                $count++;
+        }
+        return $count;
     }
 }
