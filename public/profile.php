@@ -8,13 +8,14 @@ session_start();
 if (!isset($_SESSION['user']))
     header('Location: login.php');
 
-$user = $_SESSION['user'];
-$userID = $user->getUserId();
-$pictures = PictureMapper::getWallPictures(UserMapper::getByUsername('abdo'));
+$visitor = $_SESSION['user'];
+$visitedUserID = $_GET['visitedUserID'];
+$visitedUser = UserMapper::get($visitedUserID);
+$pictures = PictureMapper::getUserPictures($visitedUser);
 ?>
 <html>
 <head>
-    <title>User Wall</title>
+    <title>User Profile</title>
     <link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="./vendor/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="./css/styles.css">
