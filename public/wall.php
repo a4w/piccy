@@ -4,7 +4,7 @@ use Mapper\PictureMapper;
 use Mapper\UserMapper;
 use View\PictureView;
 
-$pictures = PictureMapper::getWallPictures(UserMapper::getByUsername('ahmed'));
+$pictures = PictureMapper::getWallPictures(UserMapper::getByUsername('ahmad'));
 ?>
 <html>
     <head>

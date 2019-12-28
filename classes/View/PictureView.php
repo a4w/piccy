@@ -16,13 +16,13 @@ class PictureView extends View{
     private $downvoteCount = 0, $upvoteCount = 0;
     function __construct(Picture $picture, $template = null){
         $this->picture = $picture;
-        $this->author = UserMapper::getByUsername('ahmed');
+        $this->author = UserMapper::getByUsername('ahmad');
         $comments = CommentMapper::getAllComments($picture);
         $reactions = ReactionMapper::getReactionsByPicture($picture);
         foreach($comments as $comment){
             $tmp = array(
                 'comment' => $comment,
-                'user' => UserMapper::getByUsername('ahmed')
+                'user' => UserMapper::getByUsername('ahmad')
             );
             $this->comments[] = $tmp;
         }
