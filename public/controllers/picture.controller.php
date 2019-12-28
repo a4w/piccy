@@ -16,7 +16,6 @@ if (!array_key_exists('user', $_SESSION) || $_SESSION['user'] === NULL) {
 
 $output = array("error" => false);
 $user = $_SESSION['user'];
-var_dump($user);
 $userID = $user->getUserId();
 switch($action){
     case 'upvote':
