@@ -36,9 +36,9 @@
             $userID = $user->getUserId();
             echo "<div class='comment'>";
             echo "<a href='profile.php?id=$userID' class='author d-inline'>";
-            echo $comments[$i]['user']->getUsername() . " " ."</a>";
+            echo htmlspecialchars($comments[$i]['user']->getUsername()) . " " ."</a>";
             echo "<p class='comment-content d-inline'>";
-            echo $comments[$i]['comment']->getContent() . "</p>";
+            echo htmlspecialchars($comments[$i]['comment']->getContent()) . "</p>";
             echo "</div>";
         }
         ?>
