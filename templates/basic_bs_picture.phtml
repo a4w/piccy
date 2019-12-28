@@ -33,8 +33,10 @@
         </div>
         <?php
         for($i=0; $i<count($comments); $i++){
+            $user = $comments[$i]['user'];
+            $userID = $user->getUserId();
             echo "<div class='comment'>";
-            echo "<a href='#' class='author d-inline'>";
+            echo "<a href='profile.php?visitedUserID=$userID' class='author d-inline'>";
             echo $comments[$i]['user']->getUsername() . " " ."</a>";
             echo "<p class='comment-content d-inline'>";
             echo $comments[$i]['comment']->getContent() . "</p>";
