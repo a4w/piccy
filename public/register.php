@@ -61,6 +61,7 @@
         </div>
         <script src="./vendor/jquery/js/jquery.min.js"></script>
         <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
+        <script src="js/util.js"></script>
         <script>
         $("#register").click(function(){
             $("#username").removeClass("border-danger");
@@ -72,9 +73,9 @@
                 $("#username").parent().append("<span class='field-error'>Username is Empty!</span>");
                 return;
             }
-            if($("#username").val().length < 4 || $("#username").val().length > 10){
+            if($("#username").val().length < 4 || $("#username").val().length > 50){
                 $("#username").addClass("border-danger");
-                $("#username").parent().append("<span class ='field-error'>Username Must be between 4-10</span>");
+                $("#username").parent().append("<span class ='field-error'>Username Must be between 4-50</span>");
                 return;
             }
             if($("#password").val() != $("#confirm_password").val()){
@@ -82,15 +83,22 @@
                 $("#password").parent().append("<span class ='field-error'>Passwords do not match</span>");
                 return;
             }
-            if($("#password").val().length < 8 || $("#password").val().length > 16){
+            if($("#password").val().length < 8 || $("#password").val().length > 50){
                 $("#password").addClass("border-danger");
-                $("#password").parent().append("<span class ='field-error'>Passwords between 8-16</span>");
+                $("#password").parent().append("<span class ='field-error'>Passwords between 8-50</span>");
                 return;
             }
             if($("#email").val() === ""){
                 $("#email").addClass("border-danger");
                 $("#email").parent().append("<span class ='field-error'>Email Is Empty!</span>");
                 return;
+            }
+
+            if (!isEmail($("#email").val())){
+                $("#email").addClass("border-danger");
+                $("#email").parent().append("<span class ='field-error'>Please enter an valid e-mail</span>");
+                return;
+
             }
             $.post("controllers/user.controller.php", {
                 "action" : "register",
