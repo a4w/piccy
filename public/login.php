@@ -41,6 +41,7 @@ if(isset($_SESSION['user']) && $_SESSION['user'] !== null)
                         <label for="password">Password: </label>
                         <input id="password" class="form-control"/>
                     </div>
+                    <a href="register.php" style="color: #FFF;text-decoration: underline;">Not a user? Register</a>
                     <span class="alert alert-danger w-100" style="display: block;" id="status"></span>
                     <button class="btn btn-dark float-right d-block" id="login"><i class="fas fa-sign-in-alt"></i>&nbsp;Login</button>
                 </div>
