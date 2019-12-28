@@ -13,10 +13,12 @@ $(".downvote").click(function(){
 	}).done(function(data){});
 });
 $(".comment").click(function(){
-	const comment = $(this).attr("data-picture");
+	const id = $(this).attr("data-picture");
+	const comment = $(this).parent().parent().find("input");
 	$.post("controllers/picture.controller.php",{
 		"action":"addcomment",
-		"comment":$("comment").val()
+		"comment":comment.val(),
+		"id":$("#id").val()
 	}).done(function(data){
 
 	});
