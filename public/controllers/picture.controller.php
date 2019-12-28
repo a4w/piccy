@@ -61,7 +61,6 @@ switch($action){
         CommentMapper::add($comment);
         break;
     case 'upload_picture':
-        var_dump($_FILES);
         // Upload picture
         if (isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) {
             $description = $_POST['description'] ?? null;
@@ -75,7 +74,7 @@ switch($action){
             $picture_obj->setPicturePath($pic_path);
             PictureMapper::update($picture_obj);
             move_uploaded_file($file_tmp, __DIR__ . '/../'. $pic_path);
-            // header('Location: ../wall.php');
+            header('Location: ../wall.php');
         }
         break;
 }
