@@ -9,8 +9,10 @@ use Model\Reaction;
 use Mapper\Comment;
 use Model\CommentMapper;
 $action = $_POST['action'] ?? null;
-if (!array_key_exists('user', $_SESSION) || $_SESSION['user'] === NULL)
+if (!array_key_exists('user', $_SESSION) || $_SESSION['user'] === NULL) {
+    header('Location: login.php');
     exit();
+}
 
 $output = array("error" => false);
 $user = $_SESSION['user'];
