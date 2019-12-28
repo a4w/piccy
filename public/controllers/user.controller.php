@@ -26,7 +26,7 @@ switch($action){
         UserMapper::add($user);
         mkdir(__DIR__ . '/../user_pictures/user_' . $user->getUsername());
         session_start();
-        $_SESSION['user'] = $user;
+        $_SESSION['user'] = UserMapper::getByUsername($username);
         $_SESSION['login-time'] = time();
         break;
     case 'login':
