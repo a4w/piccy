@@ -27,7 +27,7 @@ $pictures = PictureMapper::getWallPictures($user);
                     <a class='hidden_link' href="wall.php"><i class="fas fa-home active-place"></i></a>
                 </div>
                 <div class="col-3 text-center">
-                    <a class="hidden_link" href="#"><i class="fas fa-search"></i></a>
+                    <a class="hidden_link" href="search.php"><i class="fas fa-search"></i></a>
                 </div>
                 <div class="col-3 text-center">
                     <a class="hidden_link" href="upload_pic.php"><i class="fas fa-plus"></i></a>
