@@ -37,4 +37,9 @@ class DatabaseConnection{
         return $db->link->prepare($statment);
     }
 
+    public static function getLastInsertID(){
+        $db = DatabaseConnection::getInstance();
+        return $db->link->lastInsertId();
+    }
+
 }

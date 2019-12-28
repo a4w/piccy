@@ -23,6 +23,10 @@ class Picture
         $this->allowComments = $allowComments;
     }
 
+    public function setPictureID($id){
+        $this->pictureID = $id;
+    }
+
     public function getPictureID()
     {
         return $this->pictureID;
@@ -36,6 +40,10 @@ class Picture
     public function getPicturePath()
     {
         return $this->picturePath;
+    }
+
+    public function setPicturePath($path){
+        $this->picturePath = $path;
     }
 
     public function getCreatedAt()

@@ -67,6 +67,7 @@ $pictures = PictureMapper::getUserPictures($visitedUser);
 <script src="./vendor/jquery/js/jquery.min.js"></script>
 <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="js/follow.js"></script>
+<script src="js/picturereactions.js"></script>
 <script>
 </script>
 </body>
