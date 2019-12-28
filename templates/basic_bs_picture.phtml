@@ -1,0 +1,45 @@
+<div class="card">
+    <div class="picture-author d-flex align-items-center pb-2">
+        <div class="d-inline-block  user-avatar"></div>
+        <a href="#" class="author">
+            <?= $author->getUsername() ?>
+        </a>
+    </div>
+    <img class="card-img-top" src="<?= $picture->getPicturePath() ?>" alt="">
+    <div class="card-body">
+        <div class="reactions">
+            <div class="row">
+                <div class="col-auto">
+                    <button class="btn btn-sm btn-success upvote" data-picture="<?php echo $picture->getPictureId()?>"><i class="fas fa-arrow-up"></i></button>
+                </div>
+                <div class="col">
+                    <span class="upvote-count text-success float-left"><?= $upvoteCount?></span>
+                    <span class="upvote-count text-danger float-right"><?= $downvoteCount?></span>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-sm btn-danger downvote" data-picture="<?php echo $picture->getPictureId()?>"><i class="fas fa-arrow-down"></i></button>
+                </div>
+            </div>
+        </div>
+        <p class="card-text description mt-2" style="font-size: 9pt; color: #888;"> <?= $picture->getDescription() ?> </p>
+        <hr />
+        <div class="form-group">
+            <div class="input-group">
+                <input placeholder="Comment on this post" class="form-control" />
+                <div class="input-group-append">
+                    <button class="btn btn-primary comment" data-picture="<?php echo $picture->getPictureId()?>"><i class="fas fa-comment"></i></button>
+                </div>
+            </div>
+        </div>
+        <?php
+        for($i=0; $i<count($comments); $i++){
+            echo "<div class='comment'>";
+            echo "<a href='#' class='author d-inline'>";
+            echo $comments[$i]['user']->getUsername() . " " ."</a>";
+            echo "<p class='comment-content d-inline'>";
+            echo $comments[$i]['comment']->getContent() . "</p>";
+            echo "</div>";
+        }
+        ?>
+    </div>
+</div>

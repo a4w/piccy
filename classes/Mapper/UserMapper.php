@@ -33,6 +33,19 @@ class UserMapper{
         UserMapper::bindUserParameters($user, $stmt);
         $stmt->execute();
     }
+    static function get($userid){
+        $stmt = DB::prepare('SELECT * FROM User WHERE UserID = :userid');
+        $stmt->bindParam(':userid', $userid);
+        $stmt->execute();
+        $stmt->setFetchMode(\PDO::FETCH_ASSOC);
+
+        $user = null;
+        if($stmt->rowCount() > 0){
+            $row = $stmt->fetch();
+            $user = new User($row['UserID'], $row['Username'], $row['Password'], $row['CountryID'], $row['Email'], $row['Bio'], $row['ProfilePicturePath']);
+        }
+        return $user;
+    }
     static function getByUsername($username){
         $stmt = DB::prepare('SELECT * FROM User WHERE Username = :username');
         $stmt->bindParam(':username', $username);
