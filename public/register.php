@@ -101,7 +101,7 @@
                     $("#username").addClass("border-danger");
                     $("#username").parent().append("<span class ='field-error'>Already Exist</span>");
                 }else{
-            
+                    window.location.href = "wall.php";
                 }
             });
         });
