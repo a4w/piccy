@@ -19,37 +19,6 @@ $pictures = PictureMapper::getWallPictures($user);
         <link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="./vendor/fontawesome/css/all.min.css">
         <link rel="stylesheet" href="./css/styles.css">
-        <style>
-            .title{
-                color: #FFF;
-                font-size: 20pt;
-                font-family: 'serif';
-            }
-            .topbar{
-                padding: 5px;
-                z-index: 5;
-                width: 100%;
-                position: fixed;
-                height: 50px;
-                background-color: #007bff;
-            }
-            .footer-nav{
-                height: 35px;
-                padding: 5px;
-                bottom: 0;
-                z-index: 5;
-                width: 100%;
-                position: fixed;
-                background-color: #007bff;
-                font-size: 18pt;
-            }
-            .active-place{
-                color: #444;
-            }
-            .hidden_link{
-                color: #FFF;
-            }
-        </style>
     </head>
     <body>
         <div class="container-fluid">
@@ -64,7 +33,7 @@ $pictures = PictureMapper::getWallPictures($user);
                     <a class="hidden_link" href="upload_pic.php"><i class="fas fa-plus"></i></a>
                 </div>
                 <div class="col-3 text-center">
-                    <a class="hidden_link" href="profile.php?visitedUserID=<?= $user->getUserID() ?>"><i class="fas fa-user"></i></a>
+                    <a class="hidden_link" href="profile.php?id=<?= $user->getUserID() ?>"><i class="fas fa-user"></i></a>
                 </div>
             </div>
             <div class="row topbar justify-content-center">

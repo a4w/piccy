@@ -9,53 +9,94 @@ session_start();
 if (!isset($_SESSION['user']))
     header('Location: login.php');
 
-$visitor = $_SESSION['user'];
-$visitorUserID = $visitor->getUserId();
-$visitedUserID = $_GET['visitedUserID'];
+$user = $_SESSION['user'];
+$visitorUserID = $user->getUserId();
+$visitedUserID = $_GET['id'];
 $visitedUser = UserMapper::get($visitedUserID);
 $pictures = PictureMapper::getUserPictures($visitedUser);
+$numberOfFollowers = FollowMapper::getNumberOfFollowers($visitedUser);
+$numberOfFollowing = FollowMapper::getNumberOfFollowing($visitedUser);
+$showFollow = FollowMapper::exists($visitorUserID, $visitedUserID);
+$showUnfollow = !$showFollow;
+$showFollow &= ($visitedUserID != $visitorUserID);
+$showUnfollow &= ($visitedUserID != $visitorUserID);
 ?>
 <html>
-<head>
-    <title>User Profile</title>
-    <link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap.min.css">
+    <head>
+        <title>User Profile</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="./vendor/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="./css/styles.css">
     <style>
-        .title{
-            color: #FFF;
-            font-size: 40pt;
-            font-family: 'serif';
+        .username{
+            font-size: 25pt;
+            display: block;
+        }
+        .followers{
+            font-size: 20pt;
+        }
+        .following{
+            font-size: 20pt;
+        }
+        .f-title{
+            display: block;
+        }
+        .email{
+            display: block;
+        }
+        .bio{
+            display: block;
         }
     </style>
 </head>
 <body>
-<div>
-    <div class="container-fluid">
-        <p>Username: <?= $visitedUser->getUsername()?></p>
-        <p>Email: <?= $visitedUser->getEmail()?></p>
-        <p>Bio: <?= $visitedUser->getBio()?></p>
-        <?php $numberOfFollowers = FollowMapper::getNumberOfFollowers($visitedUser)?>
-        <p id="numberOfFollowers" number="<?=$numberOfFollowers?>">Number Of Followers: </p>
-        <p>Number Of Following: <?= FollowMapper::getNumberOfFollowing($visitedUser)?></p>
-        <?php
-            $showFollow = FollowMapper::exists($visitorUserID, $visitedUserID);
-            $showUnfollow = !$showFollow;
-            $showFollow &= ($visitedUserID != $visitorUserID);
-            $showUnfollow &= ($visitedUserID != $visitorUserID);
-            echo "<div class='col-auto'>
-                <button class='btn btn-sm btn-danger' id='unfollow' followedUserID='$visitedUserID' show='$showFollow'><i class='fas fa-arrow-down'></i></button>
-            </div>";
-            echo "<div class='col-auto'>
-                <button class='btn btn-sm btn-success' id='follow' followedUserID='$visitedUserID' show='$showUnfollow'><i class='fas fa-arrow-up'></i></button>
-            </div>";
-        ?>
-    </div>
-</div>
 <div class="container-fluid">
+    <div class="row footer-nav justify-content-center">
+        <div class="col-3 text-center">
+            <a class='hidden_link' href="wall.php"><i class="fas fa-home "></i></a>
+        </div>
+        <div class="col-3 text-center">
+            <a class="hidden_link" href="#"><i class="fas fa-search"></i></a>
+        </div>
+        <div class="col-3 text-center">
+            <a class="hidden_link" href="upload_pic.php"><i class="fas fa-plus"></i></a>
+        </div>
+        <div class="col-3 text-center">
+            <a class="hidden_link" href="profile.php?id=<?= $user->getUserID() ?>"><i class="fas fa-user active-place"></i></a>
+        </div>
+    </div>
+    <div class="row topbar justify-content-center">
+        <div class="col-auto">
+            <span class="title"> <i class="fas fa-camera"></i>&nbsp;Piccy</span>
+        </div>
+    </div>
+    <div style="height: 55px"></div>
+    <div class="row">
+        <div class="col-6">
+            <span class="username"><?=$visitedUser->getUsername()?></span>
+            <a href="mailto:<?=$visitedUser->getEmail()?>" class="email"><?=$visitedUser->getEmail()?></a>
+        </div>
+        <div class="col-3">
+            <span class="f-title">Followers</span>
+            <span number="<?=$numberOfFollowers?>" class="followers" id="numberOfFollowers"><?=$numberOfFollowers ?></span>
+        </div>
+        <div class="col-3">
+            <span class="f-title">Following</span>
+            <span class="following"><?=$numberOfFollowing ?></span>
+        </div>
+        <div class="col-6">
+            <span class="bio"><?=$visitedUser->getBio()?></span>
+        </div>
+        <div class="col-6">
+            <?php
+                echo "<button class='btn btn-sm btn-dark w-100' id='unfollow' followedUserID='$visitedUserID' show='$showFollow'><i class='fas fa-user-minus'></i>&nbsp;Unfollow</button>";
+                echo "<button class='btn btn-sm btn-light w-100' id='follow' followedUserID='$visitedUserID' show='$showUnfollow'><i class='fas fa-user-plus'></i>&nbsp;Follow</button>";
+            ?>
+        </div>
+    </div>
     <div class="row justify-content-center">
         <div class="col-12 col-lg-4">
-            <h1 class="text-center title"><i class="fas fa-camera"></i>&nbsp;Piccy</h1>
             <?php
             foreach($pictures as $picture){
                 (new PictureView($picture))->render();
@@ -63,10 +104,12 @@ $pictures = PictureMapper::getUserPictures($visitedUser);
             ?>
         </div>
     </div>
+    <div style="height: 35px"></div>
 </div>
 <script src="./vendor/jquery/js/jquery.min.js"></script>
 <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="js/follow.js"></script>
+<script src="./js/picturereactions.js"></script>
 <script>
 </script>
 </body>
