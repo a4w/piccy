@@ -35,7 +35,7 @@
         for($i=0; $i<count($comments); $i++){
             echo "<div class='comment'>";
             echo "<a href='#' class='author d-inline'>";
-            echo $comments[$i]['user']->getUsername() . "</a>";
+            echo $comments[$i]['user']->getUsername() . " " ."</a>";
             echo "<p class='comment-content d-inline'>";
             echo $comments[$i]['comment']->getContent() . "</p>";
             echo "</div>";

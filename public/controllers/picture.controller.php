@@ -6,8 +6,8 @@ header('Content-Type: application/json;');
 
 use Mapper\ReactionMapper;
 use Model\Reaction;
-use Mapper\Comment;
-use Model\CommentMapper;
+use Model\Comment;
+use Mapper\CommentMapper;
 $action = $_POST['action'] ?? null;
 if (!array_key_exists('user', $_SESSION) || $_SESSION['user'] === NULL) {
     header('Location: login.php');
@@ -28,9 +28,9 @@ switch($action){
         $reaction = new Reaction(null, $userID, $pictureID, "DOWNVOTE",null);
         ReactionMapper::add($reaction);
         break;
-	case 'comment':
+	case 'addcomment':
 		$pictureID = $_POST['PictureID'] ?? null;
-		$content = $_POST['content'] ?? null;
+		$content = $_POST['comment'] ?? null;
 		$comment = new Comment(null, $userID, $pictureID, $content, null);
 		CommentMapper::add($comment);
 }
