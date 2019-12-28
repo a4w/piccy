@@ -24,7 +24,7 @@ class PictureView extends View{
         foreach($comments as $comment){
             $tmp = array(
                 'comment' => $comment,
-                'user' => UserMapper::get($picture->getUserID())
+                'user' => UserMapper::get($comment->getUserID())
             );
             $this->comments[] = $tmp;
         }

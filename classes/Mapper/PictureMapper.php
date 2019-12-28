@@ -28,6 +28,8 @@ class PictureMapper
         $stmt = DB::prepare('INSERT INTO Picture VALUES (:pictureid, :userid, :picturePath, :createdAt, :description, :allowComments)');
         PictureMapper::bindPictureParameters($picture, $stmt);
         $stmt->execute();
+        $picture->setPictureID(DB::getLastInsertID());
+        return $picture;
     }
     static function get($pictureid){
         $stmt = DB::prepare('SELECT * FROM Picture WHERE PictureID=:pictureid');
