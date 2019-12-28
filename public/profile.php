@@ -35,21 +35,20 @@ $pictures = PictureMapper::getUserPictures($visitedUser);
         <p>Username: <?= $visitedUser->getUsername()?></p>
         <p>Email: <?= $visitedUser->getEmail()?></p>
         <p>Bio: <?= $visitedUser->getBio()?></p>
-        <p>Number Of Followers: <?= FollowMapper::getNumberOfFollowers($visitedUser)?></p>
+        <?php $numberOfFollowers = FollowMapper::getNumberOfFollowers($visitedUser)?>
+        <p id="numberOfFollowers" number="<?=$numberOfFollowers?>">Number Of Followers: </p>
         <p>Number Of Following: <?= FollowMapper::getNumberOfFollowing($visitedUser)?></p>
         <?php
-        if ($visitedUser->getUserId() !== $visitor->getUserId()){
-            if (FollowMapper::exists($visitor->getUserId(), $visitedUser->getUserId())){
-                echo "<div class='col-auto'>
-                    <button class='btn btn-sm btn-danger' id='unfollow' followedUserID=$visitedUserID><i class='fas fa-arrow-down'></i></button>
-                </div>";
-            }
-            else{
-                echo "<div class='col-auto'>
-                    <button class='btn btn-sm btn-success' id='follow' followedUserID=$visitedUserID><i class='fas fa-arrow-up'></i></button>
-                </div>";
-            }
-        }
+            $showFollow = FollowMapper::exists($visitorUserID, $visitedUserID);
+            $showUnfollow = !$showFollow;
+            $showFollow &= ($visitedUserID != $visitorUserID);
+            $showUnfollow &= ($visitedUserID != $visitorUserID);
+            echo "<div class='col-auto'>
+                <button class='btn btn-sm btn-danger' id='unfollow' followedUserID='$visitedUserID' show='$showFollow'><i class='fas fa-arrow-down'></i></button>
+            </div>";
+            echo "<div class='col-auto'>
+                <button class='btn btn-sm btn-success' id='follow' followedUserID='$visitedUserID' show='$showUnfollow'><i class='fas fa-arrow-up'></i></button>
+            </div>";
         ?>
     </div>
 </div>
