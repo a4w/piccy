@@ -75,4 +75,18 @@ class ReactionMapper{
         }
         return $count;
     }
+
+    static function getReactionByUserAndPicture($userid, $pictureid){
+        $stmt = DB::prepare('SELECT * FROM Reaction WHERE PictureID = :pictureid AND UserID = :userid');
+        $stmt->bindParam(':pictureid', $pictureid);
+        $stmt->bindParam(':userid', $userid);
+        $stmt->execute();
+        $stmt->setFetchMode(\PDO::FETCH_ASSOC);
+        $reaction = null;
+        if($stmt->rowCount() > 0){
+            $row = $stmt->fetch();
+            $reaction = new Reaction($row['ReactionID'], $row['UserID'], $row['PictureID'], $row['Type'], $row['CreatedAt']);
+        }
+        return $reaction;
+    }
 }

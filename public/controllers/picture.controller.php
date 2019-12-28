@@ -22,14 +22,34 @@ $userID = $user->getUserId();
 switch($action){
     case 'upvote':
 		$pictureID = $_POST['PictureID'] ?? null;
-        $reaction = new Reaction(null, $userID, $pictureID, "UPVOTE",null);
-        ReactionMapper::add($reaction);
+		$reaction = ReactionMapper::getReactionByUserAndPicture($userID, $pictureID);
+		$add = true;
+		if ($reaction !== NULL){
+		    ReactionMapper::delete($reaction);
+		    if ($reaction->getType() == REACTION_TYPE::UPVOTE)
+		        $add = false;
+        }
+		if ($add) {
+            $reaction = new Reaction(null, $userID, $pictureID, "UPVOTE", null);
+            ReactionMapper::add($reaction);
+        }
         $output['numberOfUpvotes'] = ReactionMapper::getNumberOfReactsTypeByPicture(PictureMapper::get($pictureID), REACTION_TYPE::UPVOTE);
+        $output['numberOfDownvotes'] = ReactionMapper::getNumberOfReactsTypeByPicture(PictureMapper::get($pictureID), REACTION_TYPE::DOWNVOTE);
         break;
     case 'downvote':
         $pictureID = $_POST['PictureID'] ?? null;
-        $reaction = new Reaction(null, $userID, $pictureID, "DOWNVOTE",null);
-        ReactionMapper::add($reaction);
+        $reaction = ReactionMapper::getReactionByUserAndPicture($userID, $pictureID);
+        $add = true;
+        if ($reaction !== NULL){
+            ReactionMapper::delete($reaction);
+            if ($reaction->getType() == REACTION_TYPE::DOWNVOTE)
+                $add = false;
+        }
+        if ($add) {
+            $reaction = new Reaction(null, $userID, $pictureID, "DOWNVOTE",null);
+            ReactionMapper::add($reaction);
+        }
+        $output['numberOfUpvotes'] = ReactionMapper::getNumberOfReactsTypeByPicture(PictureMapper::get($pictureID), REACTION_TYPE::UPVOTE);
         $output['numberOfDownvotes'] = ReactionMapper::getNumberOfReactsTypeByPicture(PictureMapper::get($pictureID), REACTION_TYPE::DOWNVOTE);
         break;
 	case 'addcomment':
