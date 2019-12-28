@@ -1,1 +1,4 @@
 .idea/
+.gitignore
+/public/user_pictures/
+
