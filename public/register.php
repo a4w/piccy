@@ -35,11 +35,11 @@
                     </div>
                     <div class="form-group">
                         <label for="password">Password: </label>
-                        <input id="password" class="form-control"/>
+                        <input type="password" id="password" class="form-control"/>
                     </div>
                     <div class="form-group">
                         <label for="confirm_password">Confirm Password: </label>
-                        <input id="confirm_password" class="form-control"/>
+                        <input type="password" id="confirm_password" class="form-control"/>
                     </div>
                     <div class="form-group">
                         <label for="email">Email: </label>
