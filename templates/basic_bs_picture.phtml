@@ -26,10 +26,11 @@
             <div class="input-group">
                 <input placeholder="Comment on this post" class="form-control" />
                 <div class="input-group-append">
-                    <button class="btn btn-primary comment" data-picture="<?php echo $picture->getPictureId()?>"><i class="fas fa-comment"></i></button>
+                    <button class="btn btn-primary comment-btn" data-picture="<?php echo $picture->getPictureId()?>"><i class="fas fa-comment"></i></button>
                 </div>
             </div>
         </div>
+        <div class="all-comments">
         <?php
         for($i=0; $i<count($comments); $i++){
             $user = $comments[$i]['user'];
@@ -42,5 +43,6 @@
             echo "</div>";
         }
         ?>
+        </div>
     </div>
 </div>
