@@ -66,7 +66,7 @@ class ReactionMapper{
         return ReactionMapper::getNumberOfReactsType($reactions, $type);
     }
 
-    static function getNumberOfReactsType($reactions, REACTION_TYPE $type)
+    static function getNumberOfReactsType($reactions, $type)
     {
         $count = 0;
         foreach ($reactions as $reaction) {
