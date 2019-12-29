@@ -35,6 +35,7 @@ $(".comment-btn").click(function(){
 		"comment":comment.val(),
 		"PictureID":PictureID
 	}).done(function(data){
+        comment.parent().parent().parent().parent().find('.all-comments').append('<div class="comment"><a href="profile.php?id='+data.userid+'" class="author d-inline">'+data.username+' </a><p class="comment-content d-inline">'+comment.val()+'</p></div>');
         comment.val("");
 	});
 });

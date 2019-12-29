@@ -62,6 +62,8 @@ switch($action){
         }
         $comment = new Comment(null, $userID, $pictureID, $content, null);
         CommentMapper::add($comment);
+        $output['userid'] = $user->getUserID();
+        $output['username'] = $user->getUsername();
         break;
     case 'upload_picture':
         // Upload picture

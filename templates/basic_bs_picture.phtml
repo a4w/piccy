@@ -34,18 +34,18 @@
             </div>
         </div>
         <div class="all-comments">
-        <?php
-        for($i=0; $i<count($comments); $i++){
-            $user = $comments[$i]['user'];
-            $userID = $user->getUserId();
-            echo "<div class='comment'>";
-            echo "<a href='profile.php?id=$userID' class='author d-inline'>";
-            echo htmlspecialchars($comments[$i]['user']->getUsername()) . " " ."</a>";
-            echo "<p class='comment-content d-inline'>";
-            echo htmlspecialchars($comments[$i]['comment']->getContent()) . "</p>";
-            echo "</div>";
-        }
-        ?>
+            <?php
+            for($i=0; $i<count($comments); $i++){
+                $user = $comments[$i]['user'];
+                $userID = $user->getUserId();
+                echo "<div class='comment'>";
+                echo "<a href='profile.php?id=$userID' class='author d-inline'>";
+                echo htmlspecialchars($comments[$i]['user']->getUsername()) . " " ."</a>";
+                echo "<p class='comment-content d-inline'>";
+                echo htmlspecialchars($comments[$i]['comment']->getContent()) . "</p>";
+                echo "</div>";
+            }
+            ?>
         </div>
     </div>
 </div>
