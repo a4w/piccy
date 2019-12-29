@@ -93,6 +93,8 @@ switch($action){
             exit();
         }
         PictureMapper::delete($picture);
+        $pic_path = 'user_pictures/user_' . $user->getUsername() . '/' . $picture->getPictureID();
+        unlink(__DIR__ . '/../' .$pic_path);
         break;
 }
 
