@@ -66,7 +66,7 @@ $showUnfollow &= ($visitedUserID != $visitorUserID);
                     <a class="hidden_link" href="profile.php?id=<?= htmlspecialchars($user->getUserID()) ?>"><i class="fas fa-user active-place"></i></a>
                 </div>
                 <div class="col-2">
-                    <a href="logout.php" class="btn btn-primary btn-sm"><i class="fas fa-sign-out-alt"></i></a>
+                    <a class="hidden_link" href="logout.php"><i class="fas fa-sign-out-alt"></i></a>
                 </div>
             </div>
             <div class="row topbar justify-content-center">
