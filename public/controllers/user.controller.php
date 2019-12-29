@@ -32,6 +32,13 @@ switch($action){
         $user = UserMapper::getByUsername($username);
         if($user !== null){
             $output['error'] = true;
+            $output['field'] = 'username';
+            break;
+        }
+        $user = UserMapper::getByEmail($email);
+        if($user !== null){
+            $output['error'] = true;
+            $output['field'] = 'email';
             break;
         }
         $user = new User(null, $username, password_hash($password, PASSWORD_BCRYPT), 1, $email, $bio, null);

@@ -101,8 +101,16 @@
                 "email":$("#email").val()}
             ).done(function(data){
                 if(data.error){
-                    $("#username").addClass("border-danger");
-                    $("#username").parent().append("<span class ='field-error'>Already Exist</span>");
+                    switch(data.field){
+                        case 'username':
+                            $("#username").addClass("border-danger");
+                            $("#username").parent().append("<span class ='field-error'>Already Exist</span>");
+                            break;
+                        case 'email':
+                            $("#email").addClass("border-danger");
+                            $("#email").parent().append("<span class ='field-error'>Already Exist</span>");
+                            break;
+                    }
                 }else{
                     window.location.href = "wall.php";
                 }
